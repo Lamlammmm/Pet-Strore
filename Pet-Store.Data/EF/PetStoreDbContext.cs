@@ -32,7 +32,6 @@ namespace Pet_Store.Data.EF
                 return false;
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<About> Abouts { get; set; }
         public DbSet<AboutDetail> AboutDetails { get; set; }
         public DbSet<Banner> Banners { get; set; }

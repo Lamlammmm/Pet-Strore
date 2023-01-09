@@ -8,6 +8,7 @@ using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using Pet_Store.Data.RepositoryEF;
 using PetStore.Common.Common;
+using Service.Login;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,6 +93,8 @@ builder.Services.AddAuthentication(opt =>
         IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
     };
 });
+
+builder.Services.AddScoped<ILoginService, LoginService>();
 
 var app = builder.Build();
 

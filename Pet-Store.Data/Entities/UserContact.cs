@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pet_Store.Data.Entities
 {
     [Table("UserContact")]
-    public class UserContact
+    public class UserContact : BaseEntity
     {
         [Required]
         [Column(TypeName = "nvarchar(MAX)")]

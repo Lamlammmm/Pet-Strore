@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pet_Store.Common.Common;
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
+using PetStore.Model.About;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Service.AboutService
 {
@@ -48,9 +51,34 @@ namespace Service.AboutService
             return AboutId;
         }
 
-        public Task<ApiResult<Pagingnation<About>>> GetPaging(About model)
+        public async Task<ApiResult<Pagingnation<About>>> GetPaging(AboutSeachContext ctx)
         {
-            throw new NotImplementedException();
+            var query = from a in _dbContext.Abouts
+                        select new { a };
+            if (!string.IsNullOrEmpty(ctx.Keyword))
+            {
+                query = query.Where(x => x.a.Title.Contains(ctx.Keyword));
+            }
+            var totalRecords = await query.CountAsync();
+            var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
+                .Take(ctx.PageSize)
+                .Select(u => new About()
+                {
+                    Title = u.a.Title,
+                    Content = u.a.Content,
+                    Image = u.a.Image,
+                    Id = u.a.Id,
+                })
+                .ToListAsync();
+            var pagination = new Pagingnation<About>
+            {
+                Items = items,
+                TotalRecords = totalRecords,
+                PageIndex = ctx.PageIndex,
+                PageSize = ctx.PageSize,
+            };
+
+            return new ApiSuccessResult<Pagingnation<About>>(pagination);
         }
 
         public async Task<int> Update(About model)

@@ -1,5 +1,6 @@
 ﻿using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
+using PetStore.Model.About;
 
 namespace Service.AboutService
 {
@@ -10,6 +11,6 @@ namespace Service.AboutService
         Task<int> Create(About model);
         Task<int> Update(About model);
         Task<int> DeleteById(Guid id);
-        Task<ApiResult<Pagingnation<About>>> GetPaging(About model);
+        Task<ApiResult<Pagingnation<About>>> GetPaging(AboutSeachContext ctx);
     }
 }
