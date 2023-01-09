@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pet_Store.Data.Entities
 {
     [Table("Comment")]
-    public class Comment
+    public class Comment : BaseEntity
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         public Guid UserId { get; set; }
 

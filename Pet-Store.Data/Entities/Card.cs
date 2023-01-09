@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pet_Store.Data.Entities
 {
     [Table("Card")]
-    public class Card
+    public class Card : BaseEntity
     {
-        [Key]
-        public Guid ID { get; set; }
-
         [Required]
         [Column(TypeName = "nvarchar(MAX)")]
         [MaxLength]

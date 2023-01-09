@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Pet_Store.Data.Entities;
+using Pet_Store.Data.UnitOfWork;
 
 namespace Pet_Store.Data.EF
 {
-    public class PetStoreDbContext : DbContext
+    public class PetStoreDbContext : IdentityDbContext<User, Role, string>, IUnitOfWork
     {
         public PetStoreDbContext(DbContextOptions options) : base(options)
         {
@@ -12,12 +15,21 @@ namespace Pet_Store.Data.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("AppUserClaims");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("AppUserLogins").HasKey(x => x.UserId);
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("AppRoleClaims");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            optionsBuilder.UseSqlServer(
-                @"Data Source=DESKTOP-FGFA33A;Initial Catalog=PetStoreDB;Persist Security Info=True;User ID=sa;Password=1234");
+            var result = await base.SaveChangesAsync(cancellationToken);
+            if (result > 0)
+                return true;
+            else
+                return false;
         }
 
         public DbSet<User> Users { get; set; }

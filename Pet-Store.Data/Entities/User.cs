@@ -1,46 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Pet_Store.Data.Entities
 {
-    [Table("User")]
-    public class User
+    public class User : IdentityUser
     {
-        [Key]
-        public Guid ID { get; set; }
+        [MaxLength(50)]
+        [Required]
+        public string FirstName { get; set; }
+
+        [MaxLength(50)]
+        [Required]
+        public string LastName { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(MAX)")]
-        [MaxLength]
-        public string UserName { get; set; }
+        public DateTime Dob { get; set; }
 
-        [Required]
-        [Column(TypeName = "nvarchar(MAX)")]
-        [MaxLength]
-        public string PassWord { get; set; }
+        public Guid GroupUserId { get; set; }
 
-        [Required]
-        [Column(TypeName = "nvarchar(MAX)")]
-        [MaxLength]
-        public string FullName { get; set; }
+        public Guid? ERPUserId { get; set; }
+        public bool Active { get; set; }
 
-        [Required]
-        [Column(TypeName = "nvarchar(MAX)")]
-        [MaxLength]
-        public string Email { get; set; }
+        public string? ChucVuId { get; set; }
 
-        [Required]
-        [Column(TypeName = "nvarchar(MAX)")]
-        [MaxLength]
-        public string Number { get; set; }
-
-        [Required]
-        [Column(TypeName = "nvarchar(MAX)")]
-        [MaxLength]
-        public string Country { get; set; }
-
-        public DateTime Date { get; set; }
-
-        public bool Lock { get; set; }
+        public string? Code { get; set; }
     }
 }

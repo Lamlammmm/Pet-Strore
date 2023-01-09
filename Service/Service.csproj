@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Pet-Store.Data\Pet-Store.Data.csproj" />
     <ProjectReference Include="..\PetStore.Common\PetStore.Common.csproj" />
+    <ProjectReference Include="..\PetStore.Model\PetStore.Model.csproj" />
   </ItemGroup>
 
 </Project>

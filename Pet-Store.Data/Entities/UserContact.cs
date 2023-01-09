@@ -6,9 +6,6 @@ namespace Pet_Store.Data.Entities
     [Table("UserContact")]
     public class UserContact
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         [Column(TypeName = "nvarchar(MAX)")]
         [MaxLength]
