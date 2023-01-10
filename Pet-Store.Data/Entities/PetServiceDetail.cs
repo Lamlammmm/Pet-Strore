@@ -3,18 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pet_Store.Data.Entities
 {
-    [Table("Service")]
-    public class Service : BaseEntity
+    [Table("PetServiceDetail")]
+    public class PetServiceDetail : BaseEntity
     {
         [Required]
         [Column(TypeName = "nvarchar(MAX)")]
         [MaxLength]
-        public string Title { get; set; }
+        public string Image { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(MAX)")]
         [MaxLength]
-        public string Icon { get; set; }
+        public string Title { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(MAX)")]
