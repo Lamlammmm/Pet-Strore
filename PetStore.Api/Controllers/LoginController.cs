@@ -4,6 +4,8 @@ using PetStore.Service;
 
 namespace PetStore.Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class LoginController : ControllerBase
     {
         private readonly ILoginService _loginService;
