@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
 using PetStore.Service;
-using System.Collections.Generic;
 using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
@@ -10,10 +8,12 @@ namespace PetStore.Api.Controllers
     public class AboutDetailController : BaseController
     {
         private readonly IAboutDetailService _aboutDetailService;
+
         public AboutDetailController(IAboutDetailService aboutDetailService)
         {
             _aboutDetailService = aboutDetailService;
         }
+
         [HttpGet("Get-List")]
         public async Task<IActionResult> GetAll()
         {
@@ -38,7 +38,8 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
-        public async Task<IActionResult> GetById(Guid id) 
+        [HttpGet("Get-By-Id")]
+        public async Task<IActionResult> GetById(Guid id)
         {
             var item = await _aboutDetailService.GetById(id);
             if (item != null)
@@ -61,10 +62,11 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
+        [HttpPost("Create-AboutDetail")]
         public async Task<IActionResult> Create(AboutDetail model)
         {
             var item = await _aboutDetailService.Create(model);
-            if(item > 0)
+            if (item > 0)
             {
                 return Ok(new XBaseResult
                 {
@@ -84,6 +86,7 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
+        [HttpPut("Update-AboutDetail")]
         public async Task<IActionResult> Update(AboutDetail model)
         {
             var item = await _aboutDetailService.Update(model);
@@ -107,7 +110,9 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
-        public async Task<IActionResult> Delete(IEnumerable<Guid> id) 
+
+        [HttpDelete("Delete-AboutDetail")]
+        public async Task<IActionResult> Delete(IEnumerable<Guid> id)
         {
             var item = await _aboutDetailService.DeleteById(id);
             if (item > 0)

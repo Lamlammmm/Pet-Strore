@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
 using PetStore.Service;
 using WebAdmin_API.Common;
@@ -9,10 +8,12 @@ namespace PetStore.Api.Controllers
     public class BannerController : BaseController
     {
         private readonly IBannerService _bannerService;
+
         public BannerController(IBannerService bannerService)
         {
             _bannerService = bannerService;
         }
+
         [HttpGet("Get-List")]
         public async Task<IActionResult> GetAll()
         {
@@ -37,6 +38,7 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
+
         [HttpGet("Get-by-Id")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -61,6 +63,7 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
+
         [HttpPost("Create-Banner")]
         public async Task<IActionResult> Create(Banner model)
         {
@@ -86,6 +89,7 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
+
         [HttpPut("Update-Banner")]
         public async Task<IActionResult> Update(Banner model)
         {
@@ -111,6 +115,7 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
+
         [HttpDelete("Delete-Banner")]
         public async Task<IActionResult> Delete(IEnumerable<Guid> id)
         {

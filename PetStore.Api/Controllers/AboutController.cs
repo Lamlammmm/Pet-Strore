@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
+using PetStore.Model.About;
 using PetStore.Service;
 using System.ComponentModel.DataAnnotations;
 using WebAdmin_API.Common;
@@ -138,6 +139,12 @@ namespace PetStore.Api.Controllers
                     httpStatusCode = 404
                 });
             }
+        }
+        [HttpGet("Get-All-Paging")]
+        public async Task<IActionResult> GetAllPaging ([FromQuery] AboutSeachContext ctx)
+        {
+            var item = await _aboutService.GetPaging(ctx);
+            return Ok(item);
         }
     }
 }
