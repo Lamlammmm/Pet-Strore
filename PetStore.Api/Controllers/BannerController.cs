@@ -6,9 +6,7 @@ using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BannerController : ControllerBase
+    public class BannerController : BaseController
     {
         private readonly IBannerService _bannerService;
         public BannerController(IBannerService bannerService)
