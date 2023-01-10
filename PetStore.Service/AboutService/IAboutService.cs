@@ -2,7 +2,7 @@
 using PetStore.Common.Common;
 using PetStore.Model.About;
 
-namespace Service.AboutService
+namespace PetStore.Service
 {
     public interface IAboutService
     {

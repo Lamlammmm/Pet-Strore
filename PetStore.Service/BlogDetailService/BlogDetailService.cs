@@ -2,7 +2,7 @@
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 
-namespace Service.BlogDetailService
+namespace PetStore.Service
 {
     public class BlogDetailService : IBlogDetailService
     {

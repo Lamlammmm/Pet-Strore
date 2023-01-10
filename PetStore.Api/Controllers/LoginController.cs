@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetStore.Model.Login;
-using Service.Login;
+using PetStore.Service;
 
 namespace PetStore.Api.Controllers
 {

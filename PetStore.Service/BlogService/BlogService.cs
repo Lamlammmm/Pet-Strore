@@ -5,7 +5,7 @@ using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
 using PetStore.Model.Blog;
 
-namespace Service.BlogService
+namespace PetStore.Service
 {
     public class BlogService : IBlogService
     {

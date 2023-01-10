@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
-using PetStore.Common.Common;
-using Service.AboutService;
+using PetStore.Service;
 using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Net.Mail;
 using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
@@ -15,10 +11,12 @@ namespace PetStore.Api.Controllers
     public class AboutController : ControllerBase
     {
         private readonly IAboutService _aboutService;
+
         public AboutController(IAboutService aboutService)
         {
             _aboutService = aboutService;
         }
+
         [HttpGet("Get-by-Id")]
         public async Task<IActionResult> GetById([Required] Guid id)
         {
@@ -43,6 +41,7 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
+
         [HttpGet("Get-List-About")]
         public async Task<IActionResult> GetAll()
         {
@@ -67,6 +66,7 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
+
         [HttpPost("Create-About")]
         public async Task<IActionResult> Create([FromForm] About model)
         {
@@ -87,15 +87,16 @@ namespace PetStore.Api.Controllers
                 {
                     success = false,
                     message = "Create không thành công",
-                    httpStatusCode = 404
+                    httpStatusCode = 400
                 });
             }
         }
+
         [HttpPut("Update-About")]
         public async Task<IActionResult> Update([FromForm] About model)
         {
             var item = await _aboutService.Update(model);
-            if(item > 0)
+            if (item > 0)
             {
                 return Ok(new XBaseResult
                 {
@@ -115,8 +116,9 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
+
         [HttpDelete("Delete-About")]
-        public async Task<IActionResult> Delete([Required]IEnumerable<Guid> id)
+        public async Task<IActionResult> Delete([Required] IEnumerable<Guid> id)
         {
             var item = await _aboutService.DeleteById(id);
             if (item > 0)

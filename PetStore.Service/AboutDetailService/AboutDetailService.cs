@@ -2,7 +2,7 @@
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 
-namespace Service.AboutDetailService
+namespace PetStore.Service
 {
     public class AboutDetailService : IAboutDetailService
     {

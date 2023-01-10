@@ -1,6 +1,6 @@
 ﻿using Pet_Store.Data.Entities;
 
-namespace Service.BlogDetailService
+namespace PetStore.Service
 {
     public interface IBlogDetailService
     {

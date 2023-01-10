@@ -8,8 +8,7 @@ using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using Pet_Store.Data.RepositoryEF;
 using PetStore.Common.Common;
-using Service.AboutService;
-using Service.Login;
+using PetStore.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -97,6 +96,10 @@ builder.Services.AddAuthentication(opt =>
 
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IAboutService, AboutService>();
+builder.Services.AddScoped<IAboutDetailService, AboutDetailService>();
+builder.Services.AddScoped<IBannerService, BannerService>();
+builder.Services.AddScoped<IBlogDetailService, BlogDetailService>();
+builder.Services.AddScoped<IBlogService, BlogService>();
 
 var app = builder.Build();
 

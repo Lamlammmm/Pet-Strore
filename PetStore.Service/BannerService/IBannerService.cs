@@ -1,6 +1,6 @@
 ﻿using Pet_Store.Data.Entities;
 
-namespace Service.BannerService
+namespace PetStore.Service
 {
     public interface IBannerService
     {

@@ -5,7 +5,7 @@ using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
 using PetStore.Model.About;
 
-namespace Service.AboutService
+namespace PetStore.Service
 {
     public class AboutService : IAboutService
     {

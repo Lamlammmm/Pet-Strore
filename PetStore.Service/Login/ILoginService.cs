@@ -2,7 +2,7 @@
 using PetStore.Common.Common;
 using PetStore.Model.Login;
 
-namespace Service.Login
+namespace PetStore.Service
 {
     public interface ILoginService
     {

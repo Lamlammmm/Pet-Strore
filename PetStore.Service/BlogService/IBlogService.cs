@@ -3,7 +3,7 @@ using PetStore.Common.Common;
 using PetStore.Model.About;
 using PetStore.Model.Blog;
 
-namespace Service.BlogService
+namespace PetStore.Service
 {
     public interface IBlogService
     {
