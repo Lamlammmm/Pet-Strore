@@ -6,9 +6,7 @@ using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AboutController : ControllerBase
+    public class AboutController : BaseController
     {
         private readonly IAboutService _aboutService;
 
