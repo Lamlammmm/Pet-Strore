@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
+using PetStore.Model.Blog;
 using PetStore.Service;
 using WebAdmin_API.Common;
 

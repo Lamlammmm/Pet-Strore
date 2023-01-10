@@ -66,6 +66,13 @@ namespace PetStore.Api.Controllers
             }
         }
 
+        [HttpGet("Get-All-Paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] AboutSeachContext ctx)
+        {
+            var item = await _aboutService.GetPaging(ctx);
+            return Ok(item);
+        }
+
         [HttpPost("Create-About")]
         public async Task<IActionResult> Create([FromForm] About model)
         {
@@ -139,12 +146,6 @@ namespace PetStore.Api.Controllers
                     httpStatusCode = 404
                 });
             }
-        }
-        [HttpGet("Get-All-Paging")]
-        public async Task<IActionResult> GetAllPaging ([FromQuery] AboutSeachContext ctx)
-        {
-            var item = await _aboutService.GetPaging(ctx);
-            return Ok(item);
         }
     }
 }
