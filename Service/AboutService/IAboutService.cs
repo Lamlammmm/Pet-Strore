@@ -10,7 +10,7 @@ namespace Service.AboutService
         Task<About> GetById(Guid id);
         Task<int> Create(About model);
         Task<int> Update(About model);
-        Task<int> DeleteById(Guid id);
+        Task<int> DeleteById(IEnumerable<Guid> id);
         Task<ApiResult<Pagingnation<About>>> GetPaging(AboutSeachContext ctx);
     }
 }

@@ -1,43 +1,62 @@
-﻿using Pet_Store.Data.EF;
+﻿using Microsoft.EntityFrameworkCore;
+using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.AboutDetailService
 {
     public class AboutDetailService : IAboutDetailService
     {
         private readonly PetStoreDbContext _dbContext;
+
         public AboutDetailService(PetStoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public Task<int> Create(About model)
+
+        public async Task<int> Create(AboutDetail model)
         {
-            throw new NotImplementedException();
+            var create = new AboutDetail()
+            {
+                Id = model.Id,
+                ContenDetail = model.ContenDetail,
+                CatagoryDetail = model.CatagoryDetail,
+            };
+            await _dbContext.AboutDetails.AddAsync(create);
+            var result = await _dbContext.SaveChangesAsync();
+            return result;
         }
 
-        public Task<int> DeleteById(Guid id)
+        public async Task<int> DeleteById(IEnumerable<Guid> id)
         {
-            throw new NotImplementedException();
+            foreach (var items in id)
+            {
+                var item = await _dbContext.AboutDetails.FindAsync(id);
+            _dbContext.AboutDetails.Remove(item);
+            }
+            var result = await _dbContext.SaveChangesAsync();
+            return result;
         }
 
-        public Task<IList<About>> GetAll()
+        public async Task<IList<AboutDetail>> GetAll()
         {
-            throw new NotImplementedException();
+            var list = await _dbContext.AboutDetails.ToListAsync();
+            return list;
         }
 
-        public Task<About> GetById(Guid id)
+        public async Task<AboutDetail> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var item = await _dbContext.AboutDetails.FirstOrDefaultAsync(p => p.Id == id);
+            return item;
         }
 
-        public Task<int> Update(About model)
+        public async Task<int> Update(AboutDetail model)
         {
-            throw new NotImplementedException();
+            var item = await _dbContext.AboutDetails.FindAsync(model.Id);
+            item.ContenDetail = model.ContenDetail;
+            item.CatagoryDetail = model.CatagoryDetail;
+            _dbContext.AboutDetails.Update(item);
+            var result = await _dbContext.SaveChangesAsync();
+            return result;
         }
     }
 }

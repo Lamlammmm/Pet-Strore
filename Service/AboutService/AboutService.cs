@@ -4,7 +4,6 @@ using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
 using PetStore.Model.About;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Service.AboutService
 {
@@ -21,7 +20,7 @@ namespace Service.AboutService
         {
             var Item = new About()
             {
-                Id = model.Id,
+                Id = Guid.NewGuid(),
                 Title = model.Title,
                 Content = model.Content,
                 Image = model.Image,
@@ -31,10 +30,13 @@ namespace Service.AboutService
             return Result;
         }
 
-        public async Task<int> DeleteById(Guid id)
+        public async Task<int> DeleteById(IEnumerable<Guid> id)
         {
-            var Item = await _dbContext.Abouts.FindAsync(id);
+            foreach (var items in id)
+            {
+                var Item = await _dbContext.Abouts.FindAsync(id);
             _dbContext.Abouts.Remove(Item);
+            } 
             var Result = await _dbContext.SaveChangesAsync();
             return Result;
         }
