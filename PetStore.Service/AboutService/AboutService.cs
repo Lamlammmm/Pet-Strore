@@ -55,10 +55,25 @@ namespace PetStore.Service
             return About;
         }
 
-        public async Task<About> GetById(Guid id)
+        public async Task<AboutModel> GetById(Guid id)
         {
-            var AboutId = await _dbContext.Abouts.FirstOrDefaultAsync(a => a.Id == id);
-            return AboutId;
+            var query = from c in _dbContext.Abouts
+                        join a in _dbContext.AboutDetails on c.Id equals a.AboutId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        where c.Id == id
+                        select new { c, tp };
+            var entity = await query.Select(x => new AboutModel()
+            {
+                Id = x.c.Id,
+                Content = x.c.Content,
+                Image = x.c.Image,
+                Title = x.c.Title,
+                AboutId = x.tp.AboutId,
+                CatagoryDetail = x.tp.CatagoryDetail,
+                ContenDetail = x.tp.ContenDetail
+            }).FirstOrDefaultAsync();
+
+            return entity;
         }
 
         public async Task<ApiResult<Pagingnation<AboutModel>>> GetPaging(AboutSeachContext ctx)
@@ -82,7 +97,7 @@ namespace PetStore.Service
                     Id = u.a.Id,
                     AboutId = u.a.Id,
                     CatagoryDetail = u.tp.CatagoryDetail,
-                    ContenDetail= u.tp.ContenDetail
+                    ContenDetail = u.tp.ContenDetail
                 })
                 .ToListAsync();
             var pagination = new Pagingnation<AboutModel>
