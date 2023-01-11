@@ -12,6 +12,6 @@ namespace PetStore.Service
         Task<int> Update(AboutModel model);
         Task<int> DeleteByIds(IEnumerable<Guid> id);
         Task<int> Delete(Guid id);
-        Task<ApiResult<Pagingnation<About>>> GetPaging(AboutSeachContext ctx);
+        Task<ApiResult<Pagingnation<AboutModel>>> GetPaging(AboutSeachContext ctx);
     }
 }

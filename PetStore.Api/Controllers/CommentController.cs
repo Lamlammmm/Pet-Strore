@@ -66,7 +66,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpGet("Get-All-Paging")]
-        public async Task<IActionResult> GetAllPaging(CommentSeachContext ctx)
+        public async Task<IActionResult> GetAllPaging([FromQuery] CommentSeachContext ctx)
         {
             var item = await _commentService.GetAllPaging(ctx);
             return Ok(item);

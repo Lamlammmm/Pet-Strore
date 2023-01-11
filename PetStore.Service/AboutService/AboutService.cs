@@ -44,7 +44,7 @@ namespace PetStore.Service
             {
                 var Item = await _dbContext.Abouts.FindAsync(items);
                 _dbContext.Abouts.Remove(Item);
-            } 
+            }
             var Result = await _dbContext.SaveChangesAsync();
             return Result;
         }
@@ -61,10 +61,12 @@ namespace PetStore.Service
             return AboutId;
         }
 
-        public async Task<ApiResult<Pagingnation<About>>> GetPaging(AboutSeachContext ctx)
+        public async Task<ApiResult<Pagingnation<AboutModel>>> GetPaging(AboutSeachContext ctx)
         {
             var query = from a in _dbContext.Abouts
-                        select new { a };
+                        join c in _dbContext.AboutDetails on a.Id equals c.AboutId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        select new { a, tp };
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
                 query = query.Where(x => x.a.Title.Contains(ctx.Keyword));
@@ -72,15 +74,18 @@ namespace PetStore.Service
             var totalRecords = await query.CountAsync();
             var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
                 .Take(ctx.PageSize)
-                .Select(u => new About()
+                .Select(u => new AboutModel()
                 {
                     Title = u.a.Title,
                     Content = u.a.Content,
                     Image = u.a.Image,
                     Id = u.a.Id,
+                    AboutId = u.a.Id,
+                    CatagoryDetail = u.tp.CatagoryDetail,
+                    ContenDetail= u.tp.ContenDetail
                 })
                 .ToListAsync();
-            var pagination = new Pagingnation<About>
+            var pagination = new Pagingnation<AboutModel>
             {
                 Items = items,
                 TotalRecords = totalRecords,
@@ -88,7 +93,7 @@ namespace PetStore.Service
                 PageSize = ctx.PageSize,
             };
 
-            return new ApiSuccessResult<Pagingnation<About>>(pagination);
+            return new ApiSuccessResult<Pagingnation<AboutModel>>(pagination);
         }
 
         public async Task<int> Update(AboutModel model)
