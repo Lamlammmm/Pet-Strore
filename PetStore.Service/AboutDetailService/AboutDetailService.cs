@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
+using PetStore.Model.AboutDetail;
 
 namespace PetStore.Service
 {
@@ -13,7 +14,7 @@ namespace PetStore.Service
             _dbContext = dbContext;
         }
 
-        public async Task<int> Create(AboutDetail model)
+        public async Task<int> Create(AboutDetailModel model)
         {
             var create = new AboutDetail()
             {
@@ -58,9 +59,9 @@ namespace PetStore.Service
             return item;
         }
 
-        public async Task<int> Update(AboutDetail model)
+        public async Task<int> Update(AboutDetailModel model)
         {
-            var item = await _dbContext.AboutDetails.FindAsync(model.Id);
+            var item = await _dbContext.AboutDetails.FirstOrDefaultAsync(c => c.AboutId == model.AboutId);
             item.ContenDetail = model.ContenDetail;
             item.CatagoryDetail = model.CatagoryDetail;
             item.AboutId = model.AboutId;

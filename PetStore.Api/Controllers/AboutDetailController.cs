@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
+using PetStore.Model.AboutDetail;
 using PetStore.Service;
 using System.ComponentModel.DataAnnotations;
 using WebAdmin_API.Common;
@@ -64,7 +65,7 @@ namespace PetStore.Api.Controllers
             }
         }
         [HttpPost("Create-AboutDetail")]
-        public async Task<IActionResult> Create([FromBody] AboutDetail model)
+        public async Task<IActionResult> Create([FromBody] AboutDetailModel model)
         {
             var item = await _aboutDetailService.Create(model);
             if (item > 0)
@@ -88,7 +89,7 @@ namespace PetStore.Api.Controllers
             }
         }
         [HttpPost("Update-AboutDetail")]
-        public async Task<IActionResult> Update([FromBody] AboutDetail model)
+        public async Task<IActionResult> Update([FromBody] AboutDetailModel model)
         {
             var item = await _aboutDetailService.Update(model);
             if (item > 0)
