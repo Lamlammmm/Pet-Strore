@@ -102,6 +102,7 @@ builder.Services.AddScoped<IBannerService, BannerService>();
 builder.Services.AddScoped<IBlogDetailService, BlogDetailService>();
 builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
+builder.Services.AddScoped<IFileAboutService, FileAboutService>();
 
 var app = builder.Build();
 

@@ -12,8 +12,8 @@ using Pet_Store.Data.EF;
 namespace Pet_Store.Data.Migrations
 {
     [DbContext(typeof(PetStoreDbContext))]
-    [Migration("20230111030405_files")]
-    partial class files
+    [Migration("20230111034601_upfilesnow")]
+    partial class upfilesnow
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
