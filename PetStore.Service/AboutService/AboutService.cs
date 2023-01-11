@@ -16,7 +16,7 @@ namespace PetStore.Service
             _dbContext = dbContext;
         }
 
-        public async Task<int> Create(About model)
+        public async Task<int> Create(AboutModel model)
         {
             var Item = new About()
             {
@@ -83,7 +83,7 @@ namespace PetStore.Service
             return new ApiSuccessResult<Pagingnation<About>>(pagination);
         }
 
-        public async Task<int> Update(About model)
+        public async Task<int> Update(AboutModel model)
         {
             var Item = await _dbContext.Abouts.FindAsync(model.Id);
             Item.Title = model.Title;

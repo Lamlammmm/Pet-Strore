@@ -8,8 +8,8 @@ namespace PetStore.Service
     {
         Task<IList<About>> GetAll();
         Task<About> GetById(Guid id);
-        Task<int> Create(About model);
-        Task<int> Update(About model);
+        Task<int> Create(AboutModel model);
+        Task<int> Update(AboutModel model);
         Task<int> DeleteById(IEnumerable<Guid> id);
         Task<ApiResult<Pagingnation<About>>> GetPaging(AboutSeachContext ctx);
     }
