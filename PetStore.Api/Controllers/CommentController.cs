@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
 using PetStore.Model.Comment;
-using PetStore.Service.CommentService;
+using PetStore.Service;
 using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
@@ -73,7 +73,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Create-Comment")]
-        public async Task<IActionResult> Create(Comment model)
+        public async Task<IActionResult> Create([FromBody] Comment model)
         {
             var item = await _commentService.Create(model);
             if(item > 0)

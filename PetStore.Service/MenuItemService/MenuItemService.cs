@@ -2,7 +2,7 @@
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 
-namespace PetStore.Service.MenuItemService
+namespace PetStore.Service
 {
     public class MenuItemService : IMenuItemService
     {

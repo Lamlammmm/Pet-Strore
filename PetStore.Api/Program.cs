@@ -9,8 +9,7 @@ using Pet_Store.Data.Entities;
 using Pet_Store.Data.RepositoryEF;
 using PetStore.Common.Common;
 using PetStore.Service;
-using PetStore.Service.CommentService;
-using PetStore.Service.MenuItemService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,6 +104,7 @@ builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 builder.Services.AddScoped<IFileAboutService, FileAboutService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 var app = builder.Build();
 

@@ -6,44 +6,19 @@ using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
 {
-    public class MenuItemController : BaseController
+    public class ContactController : BaseController
     {
-        private readonly IMenuItemService _menuItemService;
+        private readonly IContactService _contactService;
 
-        public MenuItemController(IMenuItemService menuItemService)
+        public ContactController(IContactService contactService)
         {
-            _menuItemService = menuItemService;
+            _contactService = contactService;
         }
 
         [HttpGet("Get-All")]
-        public async Task<ActionResult> GetAll()
+        public async Task<IActionResult> GetAll(Guid id)
         {
-            var list = await _menuItemService.GetAll();
-            if (list != null)
-            {
-                return Ok(new XBaseResult
-                {
-                    success = true,
-                    httpStatusCode = 200,
-                    data = list,
-                    message = "Lấy dữ liệu thành công"
-                });
-            }
-            else
-            {
-                return BadRequest(new XBaseResult
-                {
-                    success = false,
-                    httpStatusCode = 400,
-                    message = "Lấy dữ liệu không thành công"
-                });
-            }
-        }
-
-        [HttpGet("Get-By-Id")]
-        public async Task<ActionResult> GetById(Guid id)
-        {
-            var item = await _menuItemService.GetById(id);
+            var item = await _contactService.GetAll();
             if (item != null)
             {
                 return Ok(new XBaseResult
@@ -65,10 +40,35 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPost("Create-MenuItem")]
-        public async Task<IActionResult> Create([FromBody] MenuItem model)
+        [HttpGet("Get-By-Id")]
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var item = await _menuItemService.Create(model);
+            var item = await _contactService.GetById(id);
+            if (item != null)
+            {
+                return Ok(new XBaseResult
+                {
+                    success = true,
+                    httpStatusCode = 200,
+                    data = item,
+                    message = "Lấy dữ liệu thành công"
+                });
+            }
+            else
+            {
+                return BadRequest(new XBaseResult
+                {
+                    success = false,
+                    httpStatusCode = 400,
+                    message = "Lấy dữ liệu không thành công"
+                });
+            }
+        }
+
+        [HttpPost("Create-Contact")]
+        public async Task<IActionResult> Create([FromBody] Contact model)
+        {
+            var item = await _contactService.Create(model);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -90,10 +90,10 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPost("Update-MenuItem")]
-        public async Task<ActionResult> Update([FromBody] MenuItem model)
+        [HttpPost("Update-Contact")]
+        public async Task<IActionResult> Update([FromBody] Contact model)
         {
-            var item = await _menuItemService.Update(model);
+            var item = await _contactService.Update(model);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -115,10 +115,10 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPost("Delete-MenuItems")]
-        public async Task<ActionResult> Deletes([Required] IEnumerable<Guid> id)
+        [HttpPost("Delete-Contact")]
+        public async Task<IActionResult> Delete([Required] Guid id)
         {
-            var item = await _menuItemService.DeleteByIds(id);
+            var item = await _contactService.Delete(id);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -140,10 +140,10 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPost("Delete-MenuItem")]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpPost("Delete-Contacts")]
+        public async Task<IActionResult> Deletes([Required] IEnumerable<Guid> id)
         {
-            var item = await _menuItemService.Delete(id);
+            var item = await _contactService.DeleteByIds(id);
             if (item > 0)
             {
                 return Ok(new XBaseResult

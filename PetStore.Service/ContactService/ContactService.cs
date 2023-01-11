@@ -2,7 +2,7 @@
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 
-namespace PetStore.Service.ContactService
+namespace PetStore.Service
 {
     public class ContactService : IContactService
     {
@@ -27,7 +27,7 @@ namespace PetStore.Service.ContactService
             return result;
         }
 
-        public async Task<int> Delete(IEnumerable<Guid> id)
+        public async Task<int> DeleteByIds(IEnumerable<Guid> id)
         {
             foreach (var item in id)
             {
@@ -38,7 +38,7 @@ namespace PetStore.Service.ContactService
             return result;
         }
 
-        public async Task<int> DeleteByIds(Guid id)
+        public async Task<int> Delete(Guid id)
         {
             var item = await _dbContext.Contacts.FindAsync(id);
             _dbContext.Contacts.Remove(item);

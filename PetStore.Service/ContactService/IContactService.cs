@@ -1,6 +1,6 @@
 ﻿using Pet_Store.Data.Entities;
 
-namespace PetStore.Service.ContactService
+namespace PetStore.Service
 {
     public interface IContactService
     {
@@ -12,8 +12,8 @@ namespace PetStore.Service.ContactService
 
         Task<int> Update(Contact model);
 
-        Task<int> DeleteByIds(Guid id);
+        Task<int> Delete(Guid id);
 
-        Task<int> Delete(IEnumerable<Guid> id);
+        Task<int> DeleteByIds(IEnumerable<Guid> id);
     }
 }

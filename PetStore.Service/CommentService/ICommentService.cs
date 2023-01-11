@@ -2,7 +2,7 @@
 using PetStore.Common.Common;
 using PetStore.Model.Comment;
 
-namespace PetStore.Service.CommentService
+namespace PetStore.Service
 {
     public interface ICommentService
     {

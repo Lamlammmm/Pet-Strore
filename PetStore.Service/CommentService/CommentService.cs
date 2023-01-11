@@ -4,17 +4,13 @@ using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
 using PetStore.Model.Comment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PetStore.Service.CommentService
+namespace PetStore.Service
 {
     public class CommentService : ICommentService
     {
         private readonly PetStoreDbContext _dbContext;
+
         public CommentService(PetStoreDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -55,7 +51,7 @@ namespace PetStore.Service.CommentService
                 {
                     UserId = u.a.UserId,
                     Content = u.a.Content,
-                    Date= DateTime.Now,
+                    Date = DateTime.Now,
                     Id = u.a.Id,
                 })
                 .ToListAsync();
