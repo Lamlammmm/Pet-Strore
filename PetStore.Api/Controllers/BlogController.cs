@@ -97,7 +97,7 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPut("Update-Blog")]
+        [HttpPost("Update-Blog")]
         public async Task<IActionResult> Update(Blog model)
         {
             var item = await _blogService.Update(model);
@@ -122,7 +122,7 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpDelete("Delete-Blogs")]
+        [HttpPost("Delete-Blogs")]
         public async Task<IActionResult> Delete(IEnumerable<Guid> id)
         {
             var item = await _blogService.DeleteById(id);

@@ -86,7 +86,7 @@ namespace PetStore.Api.Controllers
                 });
             }
         }
-        [HttpPut("Update-AboutDetail")]
+        [HttpPost("Update-AboutDetail")]
         public async Task<IActionResult> Update(AboutDetail model)
         {
             var item = await _aboutDetailService.Update(model);
@@ -111,7 +111,7 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpDelete("Delete-AboutDetail")]
+        [HttpPost("Delete-AboutDetail")]
         public async Task<IActionResult> Delete(IEnumerable<Guid> id)
         {
             var item = await _aboutDetailService.DeleteById(id);

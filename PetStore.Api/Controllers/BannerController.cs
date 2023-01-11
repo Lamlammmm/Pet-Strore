@@ -91,7 +91,7 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPut("Update-Banner")]
+        [HttpPost("Update-Banner")]
         public async Task<IActionResult> Update(Banner model)
         {
             var item = await _bannerService.Update(model);
@@ -117,7 +117,7 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpDelete("Delete-Banner")]
+        [HttpPost("Delete-Banner")]
         public async Task<IActionResult> Delete(IEnumerable<Guid> id)
         {
             var item = await _bannerService.DeleteById(id);
