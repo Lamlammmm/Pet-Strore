@@ -60,7 +60,7 @@ namespace PetStore.Service
 
         public async Task<int> Update(Contact model)
         {
-            var item = await _dbContext.Contacts.FindAsync(model);
+            var item = await _dbContext.Contacts.FindAsync(model.Id);
             item.Id = model.Id;
             item.Content = model.Content;
             item.Title = model.Title;

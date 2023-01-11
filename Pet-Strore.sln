@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{DC43E4CB-B5F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetStore.Api", "PetStore.Api\PetStore.Api.csproj", "{2BAE1CE7-B96B-41FF-B621-DD16F99400E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.Service", "PetStore.Service\PetStore.Service.csproj", "{5EBE59E2-9C8D-44E9-9067-7059D5689F1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetStore.Service", "PetStore.Service\PetStore.Service.csproj", "{5EBE59E2-9C8D-44E9-9067-7059D5689F1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

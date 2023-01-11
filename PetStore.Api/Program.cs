@@ -105,6 +105,7 @@ builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 builder.Services.AddScoped<IFileAboutService, FileAboutService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IProducService, ProductService>();
 
 var app = builder.Build();
 

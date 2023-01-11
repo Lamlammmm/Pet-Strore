@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pet_Store.Common.Common;
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
+using PetStore.Common.Common;
+using PetStore.Model.MenuItem;
 
 namespace PetStore.Service
 {
@@ -51,6 +54,37 @@ namespace PetStore.Service
         {
             var list = await _dbContext.MenuItems.ToListAsync();
             return list;
+        }
+
+        public async Task<ApiResult<Pagingnation<MenuItem>>> GetAllPaging(MenuItemSeachContext ctx)
+        {
+            var query = from a in _dbContext.MenuItems
+                        orderby a.GhortOrder
+                        select new { a };
+            if (!string.IsNullOrEmpty(ctx.Keyword))
+            {
+                query = query.Where(x => x.a.MenuName.Contains(ctx.Keyword));
+            }
+            var totalRecords = await query.CountAsync();
+            var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
+                .Take(ctx.PageSize)
+                .Select(u => new MenuItem()
+                {
+                    MenuName = u.a.MenuName,
+                    GhortOrder= u.a.GhortOrder,
+                    Icon= u.a.Icon,
+                    Id= u.a.Id,
+                    PanID = u.a.PanID
+                })
+                .ToListAsync();
+            var pagination = new Pagingnation<MenuItem>
+            {
+                Items = items,
+                TotalRecords = totalRecords,
+                PageIndex = ctx.PageIndex,
+                PageSize = ctx.PageSize,
+            };
+            return new ApiSuccessResult<Pagingnation<MenuItem>>(pagination);
         }
 
         public async Task<MenuItem> GetById(Guid id)
