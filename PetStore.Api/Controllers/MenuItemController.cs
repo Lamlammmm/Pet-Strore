@@ -1,26 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
-using PetStore.Model.Blog;
-using PetStore.Service;
+using PetStore.Service.MenuItemService;
 using System.ComponentModel.DataAnnotations;
 using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
 {
-    public class BannerController : BaseController
+    public class MenuItemController : BaseController
     {
-        private readonly IBannerService _bannerService;
+        private readonly IMenuItemService _menuItemService;
 
-        public BannerController(IBannerService bannerService)
+        public MenuItemController(IMenuItemService menuItemService)
         {
-            _bannerService = bannerService;
+            _menuItemService = menuItemService;
         }
 
-        [HttpGet("Get-List")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("Get-All")]
+        public async Task<ActionResult> GetAll()
         {
-            var item = await _bannerService.GetAll();
-            if (item == null)
+            var list = await _menuItemService.GetAll();
+            if (list != null)
+            {
+                return Ok(new XBaseResult
+                {
+                    success = true,
+                    httpStatusCode = 200,
+                    data = list,
+                    message = "Lấy dữ liệu thành công"
+                });
+            }
+            else
             {
                 return BadRequest(new XBaseResult
                 {
@@ -29,7 +38,13 @@ namespace PetStore.Api.Controllers
                     message = "Lấy dữ liệu không thành công"
                 });
             }
-            else
+        }
+
+        [HttpGet("Get-By-Id")]
+        public async Task<ActionResult> GetById(Guid id)
+        {
+            var item = await _menuItemService.GetById(id);
+            if (item != null)
             {
                 return Ok(new XBaseResult
                 {
@@ -39,13 +54,7 @@ namespace PetStore.Api.Controllers
                     message = "Lấy dữ liệu thành công"
                 });
             }
-        }
-
-        [HttpGet("Get-by-Id")]
-        public async Task<IActionResult> GetById(Guid id)
-        {
-            var item = await _bannerService.GetById(id);
-            if (item == null)
+            else
             {
                 return BadRequest(new XBaseResult
                 {
@@ -54,22 +63,12 @@ namespace PetStore.Api.Controllers
                     message = "Lấy dữ liệu không thành công"
                 });
             }
-            else
-            {
-                return Ok(new XBaseResult
-                {
-                    success = true,
-                    httpStatusCode = 200,
-                    data = item,
-                    message = "Lấy dữ liệu thành công"
-                });
-            }
         }
 
-        [HttpPost("Create-Banner")]
-        public async Task<IActionResult> Create([FromForm] Banner model)
+        [HttpPost("Create-MenuItem")]
+        public async Task<IActionResult> Create([FromBody] MenuItem model)
         {
-            var item = await _bannerService.Create(model);
+            var item = await _menuItemService.Create(model);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -86,16 +85,15 @@ namespace PetStore.Api.Controllers
                 {
                     success = false,
                     httpStatusCode = 400,
-                    data = item,
                     message = "Create không thành công"
                 });
             }
         }
 
-        [HttpPost("Update-Banner")]
-        public async Task<IActionResult> Update([FromForm] Banner model)
+        [HttpPost("Update-MenuItem")]
+        public async Task<ActionResult> Update([FromBody] MenuItem model)
         {
-            var item = await _bannerService.Update(model);
+            var item = await _menuItemService.Update(model);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -112,16 +110,15 @@ namespace PetStore.Api.Controllers
                 {
                     success = false,
                     httpStatusCode = 400,
-                    data = item,
                     message = "Update không thành công"
                 });
             }
         }
 
-        [HttpPost("Delete-Banner")]
-        public async Task<IActionResult> Delete([Required] IEnumerable<Guid> id)
+        [HttpPost("Delete-MenuItem")]
+        public async Task<ActionResult> Delete([Required] IEnumerable<Guid> id)
         {
-            var item = await _bannerService.DeleteById(id);
+            var item = await _menuItemService.DeleteById(id);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -138,7 +135,6 @@ namespace PetStore.Api.Controllers
                 {
                     success = false,
                     httpStatusCode = 401,
-                    data = item,
                     message = "Delete không thành công"
                 });
             }

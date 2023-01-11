@@ -33,10 +33,10 @@ namespace PetStore.Service
 
         public async Task<int> DeleteById(IEnumerable<Guid> id)
         {
-            foreach (var items in id)
+            foreach (var item in id)
             {
-                var item = await _dbContext.Blogs.FindAsync(items);
-                _dbContext.Blogs.Remove(item);
+                var finditem = await _dbContext.Blogs.FindAsync(item);
+                _dbContext.Blogs.Remove(finditem);
             }
             var result = await _dbContext.SaveChangesAsync() ;
             return result;

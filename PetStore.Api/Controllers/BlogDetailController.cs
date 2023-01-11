@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
 using PetStore.Service;
+using System.ComponentModel.DataAnnotations;
 using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
@@ -65,7 +66,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Create-BlogDetail")]
-        public async Task<IActionResult> Create(BlogDetail model)
+        public async Task<IActionResult> Create([FromBody] BlogDetail model)
         {
             var item = await _blogDetailService.Create(model);
             if (item > 0)
@@ -90,7 +91,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Update-BlogDetail")]
-        public async Task<IActionResult> Update(BlogDetail model)
+        public async Task<IActionResult> Update([FromBody] BlogDetail model)
         {
             var item = await _blogDetailService.Update(model);
             if (item > 0)
@@ -115,7 +116,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Delete-BlogDetail")]
-        public async Task<IActionResult> Delete(IEnumerable<Guid> id)
+        public async Task<IActionResult> Delete([Required] IEnumerable<Guid> id)
         {
             var item = await _blogDetailService.DeleteById(id);
             if (item > 0)
@@ -133,7 +134,7 @@ namespace PetStore.Api.Controllers
                 return BadRequest(new XBaseResult
                 {
                     success = false,
-                    httpStatusCode = 404,
+                    httpStatusCode = 401,
                     message = "Delete không thành công"
                 });
             }

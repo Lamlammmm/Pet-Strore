@@ -34,8 +34,8 @@ namespace PetStore.Service
         {
             foreach (var items in id)
             {
-                var Item = await _dbContext.Abouts.FindAsync(id);
-            _dbContext.Abouts.Remove(Item);
+                var Item = await _dbContext.Abouts.FindAsync(items);
+                _dbContext.Abouts.Remove(Item);
             } 
             var Result = await _dbContext.SaveChangesAsync();
             return Result;
