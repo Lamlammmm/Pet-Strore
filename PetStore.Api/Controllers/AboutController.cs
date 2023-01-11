@@ -118,7 +118,7 @@ namespace PetStore.Api.Controllers
                 {
                     success = false,
                     message = "Update không thành công",
-                    httpStatusCode = 404
+                    httpStatusCode = 400
                 });
             }
         }

@@ -136,7 +136,7 @@ namespace PetStore.Api.Controllers
                 return BadRequest(new XBaseResult
                 {
                     success = false,
-                    httpStatusCode = 400,
+                    httpStatusCode = 404,
                     data = item,
                     message = "Delete không thành công"
                 });
