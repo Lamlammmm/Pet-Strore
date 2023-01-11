@@ -31,7 +31,15 @@ namespace PetStore.Service
             return result;
         }
 
-        public async Task<int> DeleteById(IEnumerable<Guid> id)
+        public async Task<int> Delete(Guid id)
+        {
+            var item = await _dbContext.Blogs.FindAsync(id);
+            _dbContext.Blogs.Remove(item);
+            var result = await _dbContext.SaveChangesAsync();
+            return result;
+        }
+
+        public async Task<int> DeleteByIds(IEnumerable<Guid> id)
         {
             foreach (var item in id)
             {
@@ -41,7 +49,6 @@ namespace PetStore.Service
             var result = await _dbContext.SaveChangesAsync() ;
             return result;
         }
-
         public async Task<IList<Blog>> GetAll()
         {
             var list = await _dbContext.Blogs.ToListAsync();

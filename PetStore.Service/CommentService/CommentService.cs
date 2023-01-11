@@ -71,7 +71,7 @@ namespace PetStore.Service.CommentService
 
         public async Task<Comment> GetById(Guid id)
         {
-            var item = await _dbContext.Comments.FindAsync(id);
+            var item = await _dbContext.Comments.FirstOrDefaultAsync(p => p.Id == id);
             return item;
         }
     }

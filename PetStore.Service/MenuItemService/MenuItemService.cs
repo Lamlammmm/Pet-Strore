@@ -28,7 +28,15 @@ namespace PetStore.Service.MenuItemService
             return result;
         }
 
-        public async Task<int> DeleteById(IEnumerable<Guid> ids)
+        public async Task<int> Delete(Guid id)
+        {
+            var item = await _dbContext.MenuItems.FindAsync(id);
+            _dbContext.MenuItems.Remove(item);
+            var result = await _dbContext.SaveChangesAsync();
+            return result;
+        }
+
+        public async Task<int> DeleteByIds(IEnumerable<Guid> ids)
         {
             foreach (var item in ids)
             {
@@ -47,7 +55,7 @@ namespace PetStore.Service.MenuItemService
 
         public async Task<MenuItem> GetById(Guid id)
         {
-            var item = await _dbContext.MenuItems.FindAsync(id);
+            var item = await _dbContext.MenuItems.FirstOrDefaultAsync(p => p.Id == id);
             return item;
         }
 

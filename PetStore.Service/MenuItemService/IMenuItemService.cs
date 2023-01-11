@@ -12,6 +12,7 @@ namespace PetStore.Service.MenuItemService
 
         Task<int> Update(MenuItem model);
 
-        Task<int> DeleteById(IEnumerable<Guid> ids);
+        Task<int> DeleteByIds(IEnumerable<Guid> ids);
+        Task<int> Delete(Guid id);
     }
 }

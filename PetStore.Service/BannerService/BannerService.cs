@@ -28,13 +28,21 @@ namespace PetStore.Service
             return result;
         }
 
-        public async Task<int> DeleteById(IEnumerable<Guid> id)
+        public async Task<int> DeleteByIds(IEnumerable<Guid> id)
         {
             foreach (var item in id)
             {
                 var finditem = await _dbContext.Banners.FindAsync(item);
                 _dbContext.Banners.Remove(finditem);
             }           
+            var result = await _dbContext.SaveChangesAsync();
+            return result;
+        }
+
+        public async Task<int> Delete(Guid id)
+        {
+            var item = await _dbContext.Banners.FindAsync(id);
+            _dbContext.Banners.Remove(item);
             var result = await _dbContext.SaveChangesAsync();
             return result;
         }

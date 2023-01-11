@@ -12,6 +12,7 @@ namespace PetStore.Service
 
         Task<int> Update(AboutDetail model);
 
-        Task<int> DeleteById(IEnumerable<Guid> id);
+        Task<int> DeleteByIds(IEnumerable<Guid> id);
+        Task<int> Delete(Guid id);
     }
 }

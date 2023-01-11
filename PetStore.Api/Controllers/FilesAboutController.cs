@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
 using PetStore.Api.FormFile;
 using PetStore.Common.Common;
@@ -210,6 +211,7 @@ namespace PetStore.Api.Controllers
         #region List
 
         [HttpGet("admin/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLatestProducts(Guid id)
         {
             var files = await _fileAboutService.GetFilesAdmin(id);
@@ -221,6 +223,7 @@ namespace PetStore.Api.Controllers
         #region Utilities
 
         [HttpGet("image/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetFile(Guid id)
         {
             var check = await _fileAboutService.GetByNameAsync(id);

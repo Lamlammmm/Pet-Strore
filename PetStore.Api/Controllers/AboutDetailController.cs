@@ -112,10 +112,35 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPost("Delete-AboutDetail")]
-        public async Task<IActionResult> Delete([Required] IEnumerable<Guid> id)
+        [HttpPost("Delete-AboutDetails")]
+        public async Task<IActionResult> Deletes([Required] IEnumerable<Guid> id)
         {
-            var item = await _aboutDetailService.DeleteById(id);
+            var item = await _aboutDetailService.DeleteByIds(id);
+            if (item > 0)
+            {
+                return Ok(new XBaseResult
+                {
+                    success = true,
+                    httpStatusCode = 200,
+                    data = item,
+                    message = "Delete thành công"
+                });
+            }
+            else
+            {
+                return BadRequest(new XBaseResult
+                {
+                    success = false,
+                    httpStatusCode = 400,
+                    message = "Delete không thành công"
+                });
+            }
+        }
+
+        [HttpPost("Delete-AboutDetail")]
+        public async Task<IActionResult> Delete([Required] Guid id)
+        {
+            var item = await _aboutDetailService.Delete(id);
             if (item > 0)
             {
                 return Ok(new XBaseResult
