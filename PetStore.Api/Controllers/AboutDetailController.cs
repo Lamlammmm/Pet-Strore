@@ -34,7 +34,7 @@ namespace PetStore.Api.Controllers
                 return BadRequest(new XBaseResult
                 {
                     success = false,
-                    httpStatusCode = 404,
+                    httpStatusCode = 400,
                     message = "Lấy dữ liệu không thành công"
                 });
             }
@@ -58,7 +58,7 @@ namespace PetStore.Api.Controllers
                 return BadRequest(new XBaseResult
                 {
                     success = false,
-                    httpStatusCode = 404,
+                    httpStatusCode = 400,
                     message = "Lấy dữ liệu không thành công"
                 });
             }
@@ -131,7 +131,7 @@ namespace PetStore.Api.Controllers
                 return BadRequest(new XBaseResult
                 {
                     success = false,
-                    httpStatusCode = 401,
+                    httpStatusCode = 400,
                     message = "Delete không thành công"
                 });
             }
