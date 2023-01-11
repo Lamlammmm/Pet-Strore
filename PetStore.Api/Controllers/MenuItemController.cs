@@ -115,7 +115,7 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPost("Delete-MenuItem")]
+        [HttpPost("Delete-MenuItems")]
         public async Task<ActionResult> Deletes([Required] IEnumerable<Guid> id)
         {
             var item = await _menuItemService.DeleteByIds(id);
