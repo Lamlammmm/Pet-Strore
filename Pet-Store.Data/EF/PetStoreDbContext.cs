@@ -49,5 +49,6 @@ namespace Pet_Store.Data.EF
         public DbSet<Tag> Tags { get; set; }
         public DbSet<UserContact> UserContacts { get; set; }
         public DbSet<VoucherCode> VoucherCodes { get; set; }
+        public DbSet<Data.Entities.Files> Files { get; set; }
     }
 }

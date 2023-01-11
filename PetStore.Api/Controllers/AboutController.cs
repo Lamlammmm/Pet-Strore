@@ -61,7 +61,7 @@ namespace PetStore.Api.Controllers
                 {
                     success = false,
                     message = "Lấy dữ liệu không thành công",
-                    httpStatusCode = 404
+                    httpStatusCode = 400
                 });
             }
         }
@@ -118,7 +118,7 @@ namespace PetStore.Api.Controllers
                 {
                     success = false,
                     message = "Update không thành công",
-                    httpStatusCode = 500
+                    httpStatusCode = 400
                 });
             }
         }
@@ -143,7 +143,7 @@ namespace PetStore.Api.Controllers
                 {
                     success = false,
                     message = "Delete không thành công",
-                    httpStatusCode = 500
+                    httpStatusCode = 400
                 });
             }
         }
