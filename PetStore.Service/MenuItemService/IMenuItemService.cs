@@ -17,5 +17,9 @@ namespace PetStore.Service
         Task<int> DeleteByIds(IEnumerable<Guid> ids);
         Task<int> Delete(Guid id);
         Task<ApiResult<Pagingnation<MenuItem>>> GetAllPaging(MenuItemSeachContext ctx);
+
+        Task<IList<MenuItemModel>> GetMenuSystem();
+
+        Task<IList<MenuItemModel>> GetMenuCategory();
     }
 }

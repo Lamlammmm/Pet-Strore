@@ -25,6 +25,7 @@ namespace PetStore.Service
                 Id = model.Id,
                 MenuName = model.MenuName,
                 PanID = model.PanID,
+                TypeMenu= model.TypeMenu,
             };
             await _dbContext.MenuItems.AddAsync(item);
             var result = await _dbContext.SaveChangesAsync();
@@ -71,10 +72,11 @@ namespace PetStore.Service
                 .Select(u => new MenuItem()
                 {
                     MenuName = u.a.MenuName,
-                    GhortOrder= u.a.GhortOrder,
-                    Icon= u.a.Icon,
-                    Id= u.a.Id,
-                    PanID = u.a.PanID
+                    GhortOrder = u.a.GhortOrder,
+                    Icon = u.a.Icon,
+                    Id = u.a.Id,
+                    PanID = u.a.PanID,
+                    TypeMenu = u.a.TypeMenu,
                 })
                 .ToListAsync();
             var pagination = new Pagingnation<MenuItem>
@@ -93,6 +95,42 @@ namespace PetStore.Service
             return item;
         }
 
+        public async Task<IList<MenuItemModel>> GetMenuCategory()
+        {
+            var query = from c in _dbContext.MenuItems
+                        where c.TypeMenu == 20
+                        select new { c };
+            var entity = await query.Select(x => new MenuItemModel()
+            {
+                Id = x.c.Id,
+                GhortOrder = x.c.GhortOrder,
+                TypeMenu = x.c.TypeMenu,
+                Icon = x.c.Icon,
+                MenuName = x.c.MenuName,
+                PanID = x.c.PanID
+            }).ToListAsync();
+
+            return entity;
+        }
+
+        public async Task<IList<MenuItemModel>> GetMenuSystem()
+        {
+            var query = from c in _dbContext.MenuItems
+                        where c.TypeMenu == 10
+                        select new { c };
+            var entity = await query.Select(x => new MenuItemModel()
+            {
+                Id = x.c.Id,
+                GhortOrder = x.c.GhortOrder,
+                TypeMenu = x.c.TypeMenu,
+                Icon = x.c.Icon,
+                MenuName = x.c.MenuName,
+                PanID = x.c.PanID
+            }).ToListAsync();
+
+            return entity;
+        }
+
         public async Task<int> Update(MenuItem model)
         {
             var item = await _dbContext.MenuItems.FindAsync(model.Id);
@@ -101,6 +139,7 @@ namespace PetStore.Service
             item.GhortOrder = model.GhortOrder;
             item.PanID = model.PanID;
             item.Icon = model.Icon;
+            item.TypeMenu = model.TypeMenu;
             _dbContext.MenuItems.Update(item);
             var result = await _dbContext.SaveChangesAsync();
             return result;

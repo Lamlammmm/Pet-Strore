@@ -41,6 +41,56 @@ namespace PetStore.Api.Controllers
             }
         }
 
+        [HttpGet("Get-menu-system")]
+        public async Task<ActionResult> GetMenuSystem()
+        {
+            var list = await _menuItemService.GetMenuSystem();
+            if (list != null)
+            {
+                return Ok(new XBaseResult
+                {
+                    success = true,
+                    httpStatusCode = 200,
+                    data = list,
+                    message = "Lấy dữ liệu thành công"
+                });
+            }
+            else
+            {
+                return BadRequest(new XBaseResult
+                {
+                    success = false,
+                    httpStatusCode = 400,
+                    message = "Lấy dữ liệu không thành công"
+                });
+            }
+        }
+
+        [HttpGet("Get-menu-category")]
+        public async Task<ActionResult> GetMenuCategory()
+        {
+            var list = await _menuItemService.GetMenuCategory();
+            if (list != null)
+            {
+                return Ok(new XBaseResult
+                {
+                    success = true,
+                    httpStatusCode = 200,
+                    data = list,
+                    message = "Lấy dữ liệu thành công"
+                });
+            }
+            else
+            {
+                return BadRequest(new XBaseResult
+                {
+                    success = false,
+                    httpStatusCode = 400,
+                    message = "Lấy dữ liệu không thành công"
+                });
+            }
+        }
+
         [HttpGet("Get-By-Id")]
         public async Task<ActionResult> GetById(Guid id)
         {
@@ -167,7 +217,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpGet("Get-All-Paging")]
-        public async Task<ActionResult> GetAllPaging([FromQuery] MenuItemSeachContext ctx) 
+        public async Task<ActionResult> GetAllPaging([FromQuery] MenuItemSeachContext ctx)
         {
             var item = await _menuItemService.GetAllPaging(ctx);
             return Ok(item);
