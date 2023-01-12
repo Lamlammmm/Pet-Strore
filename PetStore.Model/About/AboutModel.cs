@@ -12,11 +12,11 @@ namespace PetStore.Model.About
 
         public string Image { get; set; }
 
-        public string CatagoryDetail { get; set; }
+        public string? CatagoryDetail { get; set; }
 
-        public string ContenDetail { get; set; }
+        public string? ContenDetail { get; set; }
 
-        public Guid AboutId { get; set; }
+        public Guid? AboutId { get; set; }
 
         public IFormFile? filesadd { get; set; }
 
