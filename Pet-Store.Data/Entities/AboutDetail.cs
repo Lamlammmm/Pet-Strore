@@ -15,5 +15,8 @@ namespace Pet_Store.Data.Entities
         [Column(TypeName = "nvarchar(MAX)")]
         [MaxLength]
         public string ContenDetail { get; set; }
+
+        [Required]
+        public Guid AboutId { get; set; }
     }
 }
