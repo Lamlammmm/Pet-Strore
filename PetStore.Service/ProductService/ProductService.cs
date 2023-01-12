@@ -3,8 +3,7 @@ using Pet_Store.Common.Common;
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
-using PetStore.Model.About;
-using PetStore.Model.Product;
+using PetStore.Model;
 
 namespace PetStore.Service
 {

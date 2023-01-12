@@ -1,6 +1,6 @@
 ﻿using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
-using PetStore.Model.Product;
+using PetStore.Model;
 
 namespace PetStore.Service
 {

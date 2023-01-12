@@ -2,31 +2,30 @@
 using Pet_Store.Data.Entities;
 using PetStore.Model;
 using PetStore.Service;
-using System.ComponentModel.DataAnnotations;
 using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
 {
-    public class ProductController : BaseController
+    public class ServicePetController : BaseController
     {
-        private readonly IProducService _producService;
+        private readonly IServicePetService _servicePetService;
 
-        public ProductController(IProducService producService)
+        public ServicePetController(IServicePetService servicePetService)
         {
-            _producService = producService;
+            _servicePetService = servicePetService;
         }
 
-        [HttpGet("Get-List-Product")]
+        [HttpGet("Get-List-Service")]
         public async Task<IActionResult> GetAll()
         {
-            var item = await _producService.GetAll();
-            if (item != null)
+            var list = await _servicePetService.GetAll();
+            if (list != null)
             {
                 return Ok(new XBaseResult
                 {
                     success = true,
                     httpStatusCode = 200,
-                    data = item,
+                    data = list,
                     message = "Lấy dữ liệu thành công"
                 });
             }
@@ -44,7 +43,7 @@ namespace PetStore.Api.Controllers
         [HttpGet("Get-By-Id")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var item = await _producService.GetById(id);
+            var item = await _servicePetService.GetById(id);
             if (item != null)
             {
                 return Ok(new XBaseResult
@@ -67,16 +66,16 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpGet("Get-All-Paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] ProductSeachContext ctx)
+        public async Task<IActionResult> GetAllPaging([FromQuery] ServicePetSeachContext ctx)
         {
-            var item = await _producService.GetAllPaging(ctx);
+            var item = await _servicePetService.GetAllPaging(ctx);
             return Ok(item);
         }
 
-        [HttpPost("Create-Product")]
-        public async Task<IActionResult> Create([FromForm] ProductModel model)
+        [HttpPost("Create-ServicePet")]
+        public async Task<IActionResult> Create([FromBody] ServicePet model)
         {
-            var item = await _producService.Create(model);
+            var item = await _servicePetService.Create(model);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -91,17 +90,17 @@ namespace PetStore.Api.Controllers
             {
                 return BadRequest(new XBaseResult
                 {
-                    success = true,
-                    httpStatusCode = 200,
+                    success = false,
+                    httpStatusCode = 400,
                     message = "Create không thành công"
                 });
             }
         }
 
-        [HttpPost("Update-Product")]
-        public async Task<IActionResult> Update([FromForm] ProductModel model)
+        [HttpPost("Update-ServicePet")]
+        public async Task<IActionResult> Update([FromBody] ServicePet model)
         {
-            var item = await _producService.Update(model);
+            var item = await _servicePetService.Update(model);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -116,17 +115,17 @@ namespace PetStore.Api.Controllers
             {
                 return BadRequest(new XBaseResult
                 {
-                    success = true,
-                    httpStatusCode = 200,
+                    success = false,
+                    httpStatusCode = 400,
                     message = "Update không thành công"
                 });
             }
         }
 
-        [HttpPost("Delete-Product")]
-        public async Task<IActionResult> Delete([Required] Guid id)
+        [HttpPost("Delete-ServicePet")]
+        public async Task<IActionResult> Delete([FromBody] Guid id)
         {
-            var item = await _producService.Delete(id);
+            var item = await _servicePetService.DeleteById(id);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -141,17 +140,17 @@ namespace PetStore.Api.Controllers
             {
                 return BadRequest(new XBaseResult
                 {
-                    success = true,
-                    httpStatusCode = 200,
+                    success = false,
+                    httpStatusCode = 400,
                     message = "Delete không thành công"
                 });
             }
         }
 
-        [HttpPost("Delete-Products")]
-        public async Task<IActionResult> Deletes([Required] IEnumerable<Guid> id)
+        [HttpPost("Delete-ServicePets")]
+        public async Task<IActionResult> Deletes([FromBody] IEnumerable<Guid> id)
         {
-            var item = await _producService.DeleteByIds(id);
+            var item = await _servicePetService.DeleteByIds(id);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -166,8 +165,8 @@ namespace PetStore.Api.Controllers
             {
                 return BadRequest(new XBaseResult
                 {
-                    success = true,
-                    httpStatusCode = 200,
+                    success = false,
+                    httpStatusCode = 400,
                     message = "Delete không thành công"
                 });
             }

@@ -2,7 +2,7 @@
 
 namespace PetStore.Model
 {
-    public class ProductSeachContext : BasePaging
+    public class ServicePetSeachContext : BasePaging
     {
     }
 }

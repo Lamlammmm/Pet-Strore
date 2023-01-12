@@ -2,7 +2,7 @@
 using PetStore.Model.BaseEntity;
 using PetStore.Model.Files;
 
-namespace PetStore.Model.Product
+namespace PetStore.Model
 {
     public class ProductModel : BaseEntityModel
     {
