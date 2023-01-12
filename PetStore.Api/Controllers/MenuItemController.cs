@@ -167,7 +167,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpGet("Get-All-Paging")]
-        public async Task<ActionResult> GetAllPaging(MenuItemSeachContext ctx) 
+        public async Task<ActionResult> GetAllPaging([FromQuery] MenuItemSeachContext ctx) 
         {
             var item = await _menuItemService.GetAllPaging(ctx);
             return Ok(item);

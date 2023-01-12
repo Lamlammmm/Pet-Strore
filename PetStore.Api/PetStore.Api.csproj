@@ -16,8 +16,4 @@
     <ProjectReference Include="..\PetStore.Service\PetStore.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\uploads\" />
-  </ItemGroup>
-
 </Project>
