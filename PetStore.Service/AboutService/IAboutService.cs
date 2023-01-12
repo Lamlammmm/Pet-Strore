@@ -6,7 +6,7 @@ namespace PetStore.Service
 {
     public interface IAboutService
     {
-        Task<IList<About>> GetAll();
+        Task<IList<AboutModel>> GetAll();
         Task<AboutModel> GetById(Guid id);
         Task<int> Create(AboutModel model);
         Task<int> Update(AboutModel model);

@@ -49,10 +49,24 @@ namespace PetStore.Service
             return Result;
         }
 
-        public async Task<IList<About>> GetAll()
+        public async Task<IList<AboutModel>> GetAll()
         {
-            var About = await _dbContext.Abouts.ToListAsync();
-            return About;
+            var query = from c in _dbContext.Abouts
+                        join a in _dbContext.AboutDetails on c.Id equals a.AboutId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        select new { c, tp };
+            var entity = await query.Select(x => new AboutModel()
+            {
+                Id = x.c.Id,
+                Content = x.c.Content,
+                Image = x.c.Image,
+                Title = x.c.Title,
+                AboutId = x.tp.AboutId,
+                CatagoryDetail = x.tp.CatagoryDetail,
+                ContenDetail = x.tp.ContenDetail
+            }).ToListAsync();
+
+            return entity; 
         }
 
         public async Task<AboutModel> GetById(Guid id)
