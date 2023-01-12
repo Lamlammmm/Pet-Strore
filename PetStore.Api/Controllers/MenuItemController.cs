@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Pet_Store.Data.Entities;
+using PetStore.Common.Extensions;
+using PetStore.Model.Enums;
 using PetStore.Model.MenuItem;
 using PetStore.Service;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
@@ -14,6 +18,50 @@ namespace PetStore.Api.Controllers
         public MenuItemController(IMenuItemService menuItemService)
         {
             _menuItemService = menuItemService;
+        }
+
+        [Route("create")]
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var model = new MenuItemModel
+            {
+                AvailableTypeMenu = new List<SelectListItem>
+                {
+                    new SelectListItem
+                    {
+                        Value = ((int)TypeMenuCode.system).ToString(),
+                        Text = TypeMenuCode.system.GetEnumDescription()
+                    },
+                    new SelectListItem
+                    {
+                        Value = ((int)TypeMenuCode.category).ToString(),
+                        Text = TypeMenuCode.category.GetEnumDescription()
+                    }
+                }
+            };
+
+            return Ok(new XBaseResult
+            {
+                data = model
+            });
+        }
+
+        private async void UpdataData(MenuItemModel model)
+        {
+            model.AvailableTypeMenu = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Value = ((int)TypeMenuCode.system).ToString(),
+                    Text = TypeMenuCode.system.GetEnumDescription()
+                },
+                new SelectListItem
+                {
+                    Value = ((int)TypeMenuCode.category).ToString(),
+                    Text = TypeMenuCode.category.GetEnumDescription()
+                }
+            };
         }
 
         [HttpGet("Get-All")]
@@ -97,6 +145,7 @@ namespace PetStore.Api.Controllers
             var item = await _menuItemService.GetById(id);
             if (item != null)
             {
+                UpdataData(item);
                 return Ok(new XBaseResult
                 {
                     success = true,

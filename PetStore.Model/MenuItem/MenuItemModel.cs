@@ -1,4 +1,5 @@
-﻿using PetStore.Model.BaseEntity;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using PetStore.Model.BaseEntity;
 
 namespace PetStore.Model.MenuItem
 {
@@ -13,5 +14,7 @@ namespace PetStore.Model.MenuItem
         public string Icon { get; set; }
 
         public int TypeMenu { get; set; }
+
+        public IList<SelectListItem>? AvailableTypeMenu { get; set; }
     }
 }

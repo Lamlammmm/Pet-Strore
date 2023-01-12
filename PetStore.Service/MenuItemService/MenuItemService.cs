@@ -25,7 +25,7 @@ namespace PetStore.Service
                 Id = model.Id,
                 MenuName = model.MenuName,
                 PanID = model.PanID,
-                TypeMenu= model.TypeMenu,
+                TypeMenu = model.TypeMenu,
             };
             await _dbContext.MenuItems.AddAsync(item);
             var result = await _dbContext.SaveChangesAsync();
@@ -89,10 +89,20 @@ namespace PetStore.Service
             return new ApiSuccessResult<Pagingnation<MenuItem>>(pagination);
         }
 
-        public async Task<MenuItem> GetById(Guid id)
+        public async Task<MenuItemModel> GetById(Guid id)
         {
-            var item = await _dbContext.MenuItems.FirstOrDefaultAsync(p => p.Id == id);
-            return item;
+            var entity = await _dbContext.MenuItems.FirstOrDefaultAsync(c => c.Id == id);
+
+            var entityModel = new MenuItemModel()
+            {
+                Id = entity.Id,
+                GhortOrder = entity.GhortOrder,
+                Icon = entity.Icon,
+                MenuName = entity.MenuName,
+                PanID = entity.PanID,
+                TypeMenu = entity.TypeMenu
+            };
+            return entityModel;
         }
 
         public async Task<IList<MenuItemModel>> GetMenuCategory()

@@ -8,7 +8,7 @@ namespace PetStore.Service
     {
         Task<IList<MenuItem>> GetAll();
 
-        Task<MenuItem> GetById(Guid id);
+        Task<MenuItemModel> GetById(Guid id);
 
         Task<int> Create(MenuItem model);
 
