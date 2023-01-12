@@ -1,4 +1,5 @@
 ﻿using Pet_Store.Data.Entities;
+using PetStore.Model.BlogDetail;
 
 namespace PetStore.Service
 {
@@ -8,9 +9,9 @@ namespace PetStore.Service
 
         Task<BlogDetail> GetById(Guid id);
 
-        Task<int> Create(BlogDetail model);
+        Task<int> Create(BlogDetailModel model);
 
-        Task<int> Update(BlogDetail model);
+        Task<int> Update(BlogDetailModel model);
 
         Task<int> DeleteByIds(IEnumerable<Guid> id);
         Task<int> Delete(Guid id);

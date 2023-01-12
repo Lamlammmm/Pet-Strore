@@ -12,6 +12,7 @@ namespace PetStore.Model.Product
         public string? ImageDetail { get; set; }
         public string? Content { get; set; }
         public Guid? VoteId { get; set; }
+        public int? PriceDetail { get; set; }
         public int? Qualyti { get; set; }
         public Guid ProductId { get; set; }
         public IFormFile? filesadd { get; set; }

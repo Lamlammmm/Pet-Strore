@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
+using PetStore.Model.BlogDetail;
 
 namespace PetStore.Service
 {
@@ -13,13 +14,13 @@ namespace PetStore.Service
             _dbContext = dbContext;
         }
 
-        public async Task<int> Create(BlogDetail model)
+        public async Task<int> Create(BlogDetailModel model)
         {
             var item = new BlogDetail()
             {
-                Id = model.Id,
-                CommentID = model.CommentID,
-                Content = model.Content,
+                Id = Guid.NewGuid(),
+                CommentID = (Guid)model.Id,
+                Content = model.ContentDetail,
             };
             await _dbContext.BlogsDetails.AddAsync(item);
             var result = await _dbContext.SaveChangesAsync();
@@ -57,11 +58,11 @@ namespace PetStore.Service
             return item;
         }
 
-        public async Task<int> Update(BlogDetail model)
+        public async Task<int> Update(BlogDetailModel model)
         {
             var item = await _dbContext.BlogsDetails.FindAsync(model.Id);
-            item.Content = model.Content;
-            item.CommentID = model.CommentID;
+            item.Content = model.ContentDetail;
+            item.CommentID = Guid.NewGuid();
             _dbContext.BlogsDetails.Update(item);
             var result = await _dbContext.SaveChangesAsync();
             return result;

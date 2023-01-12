@@ -1,33 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Pet_Store.Data.Entities;
-using PetStore.Model.BlogDetail;
+using PetStore.Model.ProductDetail;
 using PetStore.Service;
-using System.ComponentModel.DataAnnotations;
 using WebAdmin_API.Common;
 
 namespace PetStore.Api.Controllers
 {
-    public class BlogDetailController : BaseController
+    public class ProductDetailController : BaseController
     {
-        private readonly IBlogDetailService _blogDetailService;
+        private readonly IProductDetailService _productDetailService;
 
-        public BlogDetailController(IBlogDetailService blogDetailService)
+        public ProductDetailController(IProductDetailService productDetailService)
         {
-            _blogDetailService = blogDetailService;
+            _productDetailService = productDetailService;
         }
 
-        [HttpGet("Get-All")]
+        [HttpGet("Get-List-Product")]
         public async Task<IActionResult> GetAll()
         {
-            var list = await _blogDetailService.GetAll();
-            if (list != null)
+            var item = await _productDetailService.GetAll();
+            if (item != null)
             {
                 return Ok(new XBaseResult
                 {
                     success = true,
                     httpStatusCode = 200,
-                    data = list,
-                    message = "Lấy dữ liệu thành công"
+                    data = item,
+                    message = "lấy dữ liệu thành công"
                 });
             }
             else
@@ -44,7 +42,7 @@ namespace PetStore.Api.Controllers
         [HttpGet("Get-By-Id")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var item = await _blogDetailService.GetById(id);
+            var item = await _productDetailService.GetById(id);
             if (item != null)
             {
                 return Ok(new XBaseResult
@@ -52,7 +50,7 @@ namespace PetStore.Api.Controllers
                     success = true,
                     httpStatusCode = 200,
                     data = item,
-                    message = "Lấy dữ liệu thành công"
+                    message = "lấy dữ liệu thành công"
                 });
             }
             else
@@ -66,10 +64,10 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPost("Create-BlogDetail")]
-        public async Task<IActionResult> Create([FromBody] BlogDetailModel model)
+        [HttpPost("Create-ProductDetail")]
+        public async Task<IActionResult> Create([FromForm] ProductDetailModel model)
         {
-            var item = await _blogDetailService.Create(model);
+            var item = await _productDetailService.Create(model);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -91,10 +89,10 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPost("Update-BlogDetail")]
-        public async Task<IActionResult> Update([FromBody] BlogDetailModel model)
+        [HttpPost("Update-ProductDetail")]
+        public async Task<IActionResult> Update([FromForm] ProductDetailModel model)
         {
-            var item = await _blogDetailService.Update(model);
+            var item = await _productDetailService.Update(model);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -102,7 +100,7 @@ namespace PetStore.Api.Controllers
                     success = true,
                     httpStatusCode = 200,
                     data = item,
-                    message = "Create thành công"
+                    message = "Update thành công"
                 });
             }
             else
@@ -111,15 +109,15 @@ namespace PetStore.Api.Controllers
                 {
                     success = false,
                     httpStatusCode = 400,
-                    message = "Create không thành công"
+                    message = "Update không thành công"
                 });
             }
         }
 
-        [HttpPost("Delete-BlogDetails")]
-        public async Task<IActionResult> Deletes([Required] IEnumerable<Guid> id)
+        [HttpPost("Delete-ProductDetail")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var item = await _blogDetailService.DeleteByIds(id);
+            var item = await _productDetailService.Delete(id);
             if (item > 0)
             {
                 return Ok(new XBaseResult
@@ -141,10 +139,10 @@ namespace PetStore.Api.Controllers
             }
         }
 
-        [HttpPost("Delete-BlogDetail")]
-        public async Task<IActionResult> Delete([Required] Guid id)
+        [HttpPost("Delete-ProductDetails")]
+        public async Task<IActionResult> Deletes(IEnumerable<Guid> ids)
         {
-            var item = await _blogDetailService.Delete(id);
+            var item = await _productDetailService.DeleteByIds(ids);
             if (item > 0)
             {
                 return Ok(new XBaseResult
