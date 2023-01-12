@@ -3,6 +3,7 @@ using Pet_Store.Common.Common;
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
+using PetStore.Model.About;
 using PetStore.Model.Product;
 
 namespace PetStore.Service
@@ -16,11 +17,11 @@ namespace PetStore.Service
             _dbContext = dbContext;
         }
 
-        public async Task<int> Create(Product model)
+        public async Task<int> Create(ProductModel model)
         {
             var item = new Product()
             {
-                Id = model.Id,
+                Id = Guid.NewGuid(),
                 Name = model.Name,
                 Image = model.Image,
                 Price = model.Price,
@@ -55,10 +56,12 @@ namespace PetStore.Service
             return list;
         }
 
-        public async Task<ApiResult<Pagingnation<Product>>> GetAllPaging(ProductSeachContext ctx)
+        public async Task<ApiResult<Pagingnation<ProductModel>>> GetAllPaging(ProductSeachContext ctx)
         {
             var query = from a in _dbContext.Products
-                        select new { a };
+                        join c in _dbContext.ProductDetails on a.Id equals c.ProductId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        select new { a, tp };
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
                 query = query.Where(x => x.a.Name.Contains(ctx.Keyword));
@@ -66,15 +69,20 @@ namespace PetStore.Service
             var totalRecords = await query.CountAsync();
             var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
                 .Take(ctx.PageSize)
-                .Select(u => new Product()
+                .Select(u => new ProductModel()
                 {
                     Id = u.a.Id,
                     Name = u.a.Name,
                     Image = u.a.Image,
-                    Price = u.a.Price
+                    Price = u.a.Price,
+                    ProductId = u.tp.ProductId,
+                    ImageDetail = u.tp.Image,
+                    Content = u.tp.Content,
+                    VoteId = u.tp.VoteID,
+                    Qualyti = u.tp.Quality
                 })
                 .ToListAsync();
-            var pagination = new Pagingnation<Product>
+            var pagination = new Pagingnation<ProductModel>
             {
                 Items = items,
                 TotalRecords = totalRecords,
@@ -82,16 +90,33 @@ namespace PetStore.Service
                 PageSize = ctx.PageSize,
             };
 
-            return new ApiSuccessResult<Pagingnation<Product>>(pagination);
+            return new ApiSuccessResult<Pagingnation<ProductModel>>(pagination);
         }
 
-        public async Task<Product> GetById(Guid id)
+        public async Task<ProductModel> GetById(Guid id)
         {
-            var item = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
-            return item;
+            var query = from a in _dbContext.Products
+                        join c in _dbContext.ProductDetails on a.Id equals c.ProductId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        where a.Id == id
+                        select new { a, tp };
+            var entity = await query.Select(u => new ProductModel()
+            {
+                Id = u.a.Id,
+                Name = u.a.Name,
+                Image = u.a.Image,
+                Price = u.a.Price,
+                ProductId = u.tp.ProductId,
+                ImageDetail = u.tp.Image,
+                Content = u.tp.Content,
+                VoteId = u.tp.VoteID,
+                Qualyti = u.tp.Quality
+            }).FirstOrDefaultAsync();
+
+            return entity;
         }
 
-        public async Task<int> Update(Product model)
+        public async Task<int> Update(ProductModel model)
         {
             var item = await _dbContext.Products.FindAsync(model.Id);
             item.Name = model.Name;

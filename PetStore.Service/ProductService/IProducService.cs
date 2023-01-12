@@ -8,16 +8,16 @@ namespace PetStore.Service
     {
         Task<IList<Product>> GetAll();
 
-        Task<Product> GetById(Guid id);
+        Task<ProductModel> GetById(Guid id);
 
-        Task<int> Create(Product model);
+        Task<int> Create(ProductModel model);
 
-        Task<int> Update(Product model);
+        Task<int> Update(ProductModel model);
 
         Task<int> Delete(Guid id);
 
         Task<int> DeleteByIds(IEnumerable<Guid> id);
 
-        Task<ApiResult<Pagingnation<Product>>> GetAllPaging(ProductSeachContext ctx);
+        Task<ApiResult<Pagingnation<ProductModel>>> GetAllPaging(ProductSeachContext ctx);
     }
 }

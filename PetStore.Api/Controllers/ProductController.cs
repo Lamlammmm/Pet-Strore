@@ -74,7 +74,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Create-Product")]
-        public async Task<IActionResult> Create([FromForm] Product model)
+        public async Task<IActionResult> Create([FromForm] ProductModel model)
         {
             var item = await _producService.Create(model);
             if (item > 0)
@@ -99,7 +99,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Update-Product")]
-        public async Task<IActionResult> Update([FromForm] Product model)
+        public async Task<IActionResult> Update([FromForm] ProductModel model)
         {
             var item = await _producService.Update(model);
             if (item > 0)
