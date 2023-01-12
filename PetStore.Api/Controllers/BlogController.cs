@@ -74,7 +74,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Create-Blog")]
-        public async Task<IActionResult> Create([FromForm] Blog model)
+        public async Task<IActionResult> Create([FromForm] BlogModel model)
         {
             var item = await _blogService.Create(model);
             if (item > 0)
@@ -99,7 +99,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Update-Blog")]
-        public async Task<IActionResult> Update([FromForm] Blog model)
+        public async Task<IActionResult> Update([FromForm] BlogModel model)
         {
             var item = await _blogService.Update(model);
             if (item > 0)

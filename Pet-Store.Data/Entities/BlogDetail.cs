@@ -13,5 +13,7 @@ namespace Pet_Store.Data.Entities
 
         [Required]
         public Guid CommentID { get; set; }
+        [Required]
+        public Guid BlogId { get; set; }
     }
 }

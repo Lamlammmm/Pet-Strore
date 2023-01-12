@@ -44,8 +44,8 @@ namespace Pet_Store.Data.EF
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductDetail> ProductDetails { get; set; }
-        public DbSet<PetService> Services { get; set; }
-        public DbSet<PetServiceDetail> ServicesDetails { get; set; }
+        public DbSet<ServicePet> Services { get; set; }
+        public DbSet<ServicePetDetail> ServicesDetails { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<UserContact> UserContacts { get; set; }
         public DbSet<VoucherCode> VoucherCodes { get; set; }

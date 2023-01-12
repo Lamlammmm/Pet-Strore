@@ -16,11 +16,11 @@ namespace PetStore.Service
             _dbContext = dbContext;
         }
 
-        public async Task<int> Create(Blog model)
+        public async Task<int> Create(BlogModel model)
         {
             var item = new Blog()
             {
-                Id = model.Id,
+                Id = (Guid)model.Id,
                 Image = model.Image,
                 Title = model.Title,
                 Content = model.Content,
@@ -46,7 +46,7 @@ namespace PetStore.Service
                 var finditem = await _dbContext.Blogs.FindAsync(item);
                 _dbContext.Blogs.Remove(finditem);
             }
-            var result = await _dbContext.SaveChangesAsync() ;
+            var result = await _dbContext.SaveChangesAsync();
             return result;
         }
         public async Task<IList<Blog>> GetAll()
@@ -55,16 +55,33 @@ namespace PetStore.Service
             return list;
         }
 
-        public async Task<Blog> GetById(Guid id)
+        public async Task<BlogModel> GetById(Guid id)
         {
-            var item = await _dbContext.Blogs.FirstOrDefaultAsync(p => p.Id == id);
-            return item;
+            var query = from c in _dbContext.Blogs
+                        join a in _dbContext.BlogsDetails on c.Id equals a.BlogId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        where tp.Id == id
+                        select new { c, tp };
+
+            var entity = await query.Select(p => new BlogModel()
+            {
+                Id = p.c.Id,
+                Image = p.c.Image,
+                Title = p.c.Title,
+                Content = p.c.Content,
+                CreateDate = p.c.CreateDate,
+                CommentId = p.tp.CommentID,
+                ContentDetail = p.tp.Content,
+            }).FirstOrDefaultAsync();
+            return entity;
         }
 
-        public async Task<ApiResult<Pagingnation<Blog>>> GetPaging(BlogSeachContext ctx)
+        public async Task<ApiResult<Pagingnation<BlogModel>>> GetPaging(BlogSeachContext ctx)
         {
             var query = from a in _dbContext.Blogs
-                        select new { a };
+                        join c in _dbContext.BlogsDetails on a.Id equals c.BlogId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        select new { a, tp };
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
                 query = query.Where(x => x.a.Title.Contains(ctx.Keyword));
@@ -72,16 +89,19 @@ namespace PetStore.Service
             var totalRecords = await query.CountAsync();
             var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
                 .Take(ctx.PageSize)
-                .Select(u => new Blog()
+                .Select(u => new BlogModel()
                 {
                     Title = u.a.Title,
                     Id = u.a.Id,
                     Image = u.a.Image,
                     Content = u.a.Content,
                     CreateDate = u.a.CreateDate,
+                    ContentDetail = u.tp.Content,
+                    CommentId = u.tp.CommentID,
+                    BlogId = u.tp.BlogId
                 })
                 .ToListAsync();
-            var pagination = new Pagingnation<Blog>
+            var pagination = new Pagingnation<BlogModel>
             {
                 Items = items,
                 TotalRecords = totalRecords,
@@ -89,10 +109,10 @@ namespace PetStore.Service
                 PageSize = ctx.PageSize,
             };
 
-            return new ApiSuccessResult<Pagingnation<Blog>>(pagination);
+            return new ApiSuccessResult<Pagingnation<BlogModel>>(pagination);
         }
 
-        public async Task<int> Update(Blog model)
+        public async Task<int> Update(BlogModel model)
         {
             var item = await _dbContext.Blogs.FindAsync(model.Id);
             item.Image = model.Image;

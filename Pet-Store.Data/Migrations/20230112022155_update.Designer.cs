@@ -12,8 +12,8 @@ using Pet_Store.Data.EF;
 namespace Pet_Store.Data.Migrations
 {
     [DbContext(typeof(PetStoreDbContext))]
-    [Migration("20230110073810_updateservicetable")]
-    partial class updateservicetable
+    [Migration("20230112022155_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -156,6 +156,9 @@ namespace Pet_Store.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AboutId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CatagoryDetail")
                         .IsRequired()
                         .HasColumnType("nvarchar(MAX)");
@@ -225,6 +228,9 @@ namespace Pet_Store.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BlogId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CommentID")
@@ -324,6 +330,36 @@ namespace Pet_Store.Data.Migrations
                     b.ToTable("Contact");
                 });
 
+            modelBuilder.Entity("Pet_Store.Data.Entities.Files", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AboutId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("MimeType")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("Size")
+                        .HasColumnType("decimal(15,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("Pet_Store.Data.Entities.Footer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -375,6 +411,9 @@ namespace Pet_Store.Data.Migrations
                     b.Property<Guid>("PanID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("TypeMenu")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("MenuItem");
@@ -416,6 +455,9 @@ namespace Pet_Store.Data.Migrations
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<Guid>("PetServiceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -464,6 +506,9 @@ namespace Pet_Store.Data.Migrations
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quality")
                         .HasColumnType("int");

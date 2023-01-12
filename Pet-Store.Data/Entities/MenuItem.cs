@@ -18,5 +18,7 @@ namespace Pet_Store.Data.Entities
         [Column(TypeName = "nvarchar(MAX)")]
         [MaxLength]
         public string Icon { get; set; }
+
+        public int TypeMenu { get; set; }
     }
 }

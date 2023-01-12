@@ -5,24 +5,62 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Pet_Store.Data.Migrations
 {
-    public partial class updateservicetable : Migration
+    public partial class updateservicepettablle : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Service");
+                name: "PetService");
 
             migrationBuilder.DropTable(
-                name: "ServiceDetail");
+                name: "PetServiceDetail");
 
             migrationBuilder.CreateTable(
-                name: "PetService",
+                name: "ServicePetDetail",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    PetServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServicePetDetail", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServicePets",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     Icon = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(MAX)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServicePets", x => x.Id);
+                });
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "ServicePetDetail");
+
+            migrationBuilder.DropTable(
+                name: "ServicePets");
+
+            migrationBuilder.CreateTable(
+                name: "PetService",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(MAX)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,50 +72,14 @@ namespace Pet_Store.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(MAX)", nullable: false)
+                    PetServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(MAX)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PetServiceDetail", x => x.Id);
-                });
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "PetService");
-
-            migrationBuilder.DropTable(
-                name: "PetServiceDetail");
-
-            migrationBuilder.CreateTable(
-                name: "Service",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    Icon = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(MAX)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Service", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ServiceDetail",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(MAX)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServiceDetail", x => x.Id);
                 });
         }
     }

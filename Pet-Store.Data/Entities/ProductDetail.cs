@@ -19,5 +19,7 @@ namespace Pet_Store.Data.Entities
         public string Image { get; set; }
         public Guid VoteID { get; set; }
         public int Quality { get; set; }
+        [Required]
+        public Guid ProductId { get; set; }
     }
 }
