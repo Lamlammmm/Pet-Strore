@@ -1,16 +1,13 @@
-﻿using Pet_Store.Data.EF;
+﻿using Microsoft.EntityFrameworkCore;
+using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetStore.Service
 {
-    public class TagService:ITagService
+    public class TagService : ITagService
     {
         private readonly PetStoreDbContext _dbContext;
+
         public TagService(PetStoreDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -21,37 +18,53 @@ namespace PetStore.Service
             var item = new Tag()
             {
                 Id = Guid.NewGuid(),
-                BlogId=model.BlogId,
-                NameTag=model.NameTag,
+                BlogId = model.BlogId,
+                NameTag = model.NameTag,
             };
             await _dbContext.Tags.AddAsync(item);
             var result = await _dbContext.SaveChangesAsync();
             return result;
         }
 
-        public Task<int> Delete(Guid id)
+        public async Task<int> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var item = await _dbContext.Tags.FindAsync(id);
+            _dbContext.Tags.Remove(item);
+            var result = await _dbContext.SaveChangesAsync();
+            return result;
         }
 
-        public Task<int> DeleteByIds(IEnumerable<Guid> ids)
+        public async Task<int> DeleteByIds(IEnumerable<Guid> ids)
         {
-            throw new NotImplementedException();
+            foreach (var item in ids)
+            {
+                var finditem = await _dbContext.Tags.FindAsync(item);
+                _dbContext.Tags.Remove(finditem);
+            }
+            var result = await _dbContext.SaveChangesAsync();
+            return result;
         }
 
-        public Task<IList<Tag>> GetAll()
+        public async Task<IList<Tag>> GetAll()
         {
-            throw new NotImplementedException();
+            var list = await _dbContext.Tags.ToListAsync();
+            return list;
         }
 
-        public Task<Tag> GetById(Guid id)
+        public async Task<Tag> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var item = await _dbContext.Tags.FirstOrDefaultAsync(p => p.Id == id);
+            return item;
         }
 
-        public Task<int> Update(Tag modil)
+        public async Task<int> Update(Tag model)
         {
-            throw new NotImplementedException();
+            var item = await _dbContext.Tags.FindAsync(model.Id);
+            item.BlogId = model.BlogId;
+            item.NameTag = model.NameTag;
+            _dbContext.Tags.Update(item);
+            var result = await _dbContext.SaveChangesAsync();
+            return result;
         }
     }
 }
