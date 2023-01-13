@@ -4,6 +4,7 @@ using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
 using PetStore.Model;
+using PetStore.Model.About;
 using PetStore.Model.Banner;
 using PetStore.Model.MenuItem;
 
@@ -52,10 +53,21 @@ namespace PetStore.Service
             return result;
         }
 
-        public async Task<IList<Banner>> GetAll()
+        public async Task<IList<BannerModel>> GetAll()
         {
-            var list = await _dbContext.Banners.ToListAsync();
-            return list;
+            var query = from c in _dbContext.Banners
+                        where c.TypeBanner == 10
+                        select new { c };
+            var entity = await query.Select(x => new BannerModel()
+            {
+                Id = x.c.Id,
+                Content = x.c.Content,
+                Image = x.c.Image,
+                Title = x.c.Title,
+                TypeBanner= x.c.TypeBanner
+            }).ToListAsync();
+
+            return entity;
         }
 
         public async Task<BannerModel> GetById(Guid id)
