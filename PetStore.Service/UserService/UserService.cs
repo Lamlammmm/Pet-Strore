@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
+using PetStore.Model;
 
 namespace PetStore.Service
 {
@@ -13,13 +14,13 @@ namespace PetStore.Service
             _dbContext = dbContext;
         }
 
-        public async Task<int> Create(User model)
+        public async Task<int> Create(UserModel model)
         {
             var item = new User()
             {
                 AccessFailedCount = model.AccessFailedCount,
                 UserName = model.UserName,
-                Id = model.Id,
+                Id = model.GuidId,
                 Active = model.Active,
                 ChucVuId = model.ChucVuId,
                 Code = model.Code,
@@ -46,7 +47,7 @@ namespace PetStore.Service
             return result;
         }
 
-        public async Task<int> Delete(Guid id)
+        public async Task<int> Delete(string id)
         {
             var item = await _dbContext.Users.FindAsync(id);
             _dbContext.Users.Remove(item);
@@ -54,7 +55,7 @@ namespace PetStore.Service
             return result;
         }
 
-        public async Task<int> DeleteByIds(IEnumerable<Guid> ids)
+        public async Task<int> DeleteByIds(IEnumerable<string> ids)
         {
             foreach (var item in ids)
             {
@@ -77,9 +78,9 @@ namespace PetStore.Service
             return item;
         }
 
-        public async Task<int> Update(User model)
+        public async Task<int> Update(UserModel model)
         {
-            var item = await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == model.Id);
+            var item = await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == model.GuidId);
             item.AccessFailedCount = model.AccessFailedCount;
             item.UserName = model.UserName;
             item.Active = model.Active;

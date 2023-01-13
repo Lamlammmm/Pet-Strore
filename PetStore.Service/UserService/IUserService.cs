@@ -1,4 +1,5 @@
 ﻿using Pet_Store.Data.Entities;
+using PetStore.Model;
 
 namespace PetStore.Service
 {
@@ -8,12 +9,12 @@ namespace PetStore.Service
 
         Task<User> GetById(string id);
 
-        Task<int> Create(User model);
+        Task<int> Create(UserModel model);
 
-        Task<int> Update(User model);
+        Task<int> Update(UserModel model);
 
-        Task<int> Delete(Guid id);
+        Task<int> Delete(string id);
 
-        Task<int> DeleteByIds(IEnumerable<Guid> ids);
+        Task<int> DeleteByIds(IEnumerable<string> ids);
     }
 }
