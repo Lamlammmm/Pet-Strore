@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
 using PetStore.Model.AboutDetail;
 using PetStore.Service;
@@ -17,6 +18,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpGet("Get-List")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var list = await _aboutDetailService.GetAll();
