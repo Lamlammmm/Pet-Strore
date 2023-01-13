@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Pet_Store.Data.Entities;
 using PetStore.Common.Extensions;
@@ -23,6 +24,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpGet("Get-List")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var item = await _bannerService.GetAll();

@@ -18,7 +18,6 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpGet("Get-List")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var list = await _aboutDetailService.GetAll();
