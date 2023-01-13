@@ -15,5 +15,6 @@ namespace PetStore.Model.Files
         public string? MimeType { get; set; }
 
         public Guid? AboutId { get; set; }
+        public Guid? BannerId { get; set; }
     }
 }

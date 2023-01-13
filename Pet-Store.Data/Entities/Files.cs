@@ -21,5 +21,6 @@ namespace Pet_Store.Data.Entities
         public string? MimeType { get; set; }
 
         public Guid? AboutId { get; set; }
+        public Guid? BannerId { get; set; }
     }
 }
