@@ -9,7 +9,7 @@ using Pet_Store.Data.Entities;
 using Pet_Store.Data.RepositoryEF;
 using PetStore.Common.Common;
 using PetStore.Service;
-
+using PetStore.Service.VoucherCodeService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -110,6 +110,8 @@ builder.Services.AddScoped<IProductDetailService, ProductDetailService>();
 builder.Services.AddScoped<IServicePetService, ServicePetService>();
 builder.Services.AddScoped<IFileBannerService, FileBannerService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserContactService, UserContactService>();
+builder.Services.AddScoped<IVoucherCodeService, VoucherCodeService>();
 
 var app = builder.Build();
 
