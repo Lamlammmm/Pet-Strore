@@ -20,7 +20,7 @@ namespace PetStore.Service
         {
             var item = new Comment()
             {
-                Id = model.Id,
+                Id = Guid.NewGuid(),
                 Content = model.Content,
                 Date = DateTime.Now,
                 UserId = model.UserId,

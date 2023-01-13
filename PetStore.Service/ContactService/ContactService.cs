@@ -17,7 +17,7 @@ namespace PetStore.Service
         {
             var item = new Contact()
             {
-                Id = model.Id,
+                Id = Guid.NewGuid(),
                 Content = model.Content,
                 Icon = model.Icon,
                 Title = model.Title

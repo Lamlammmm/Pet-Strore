@@ -22,7 +22,7 @@ namespace PetStore.Service
         {
             var item = new Banner()
             {
-                Id = Guid.NewGuid(),
+                Id = (Guid)model.Id,
                 Title = model.Title,
                 Content = model.Content,
                 Image = model.Image,
@@ -98,6 +98,7 @@ namespace PetStore.Service
                 .Take(ctx.PageSize)
                 .Select(u => new Banner()
                 {
+                    Id=u.a.Id,
                     Title = u.a.Title,
                     Content = u.a.Content,
                     Image= u.a.Image,

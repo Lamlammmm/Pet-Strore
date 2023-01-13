@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Pet_Store.Data.Entities;
 using PetStore.Common.Extensions;
 using PetStore.Model;
 using PetStore.Model.Banner;
-using PetStore.Model.Blog;
 using PetStore.Model.Enums;
-using PetStore.Model.MenuItem;
 using PetStore.Service;
 using System.ComponentModel.DataAnnotations;
 using WebAdmin_API.Common;
@@ -70,7 +67,7 @@ namespace PetStore.Api.Controllers
                     data = item,
                     message = "Lấy dữ liệu thành công"
                 });
-            }       
+            }
         }
 
         [HttpGet("Get-All-Paging")]

@@ -31,6 +31,7 @@ namespace Pet_Store.Data.Entities
 
         [Required]
         public DateTime Dob { get; set; }
+        public string Avatar { get; set; }
 
         public Guid GroupUserId { get; set; }
 
