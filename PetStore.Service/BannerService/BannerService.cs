@@ -4,6 +4,8 @@ using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
 using PetStore.Model;
+using PetStore.Model.Banner;
+using PetStore.Model.MenuItem;
 
 namespace PetStore.Service
 {
@@ -16,11 +18,11 @@ namespace PetStore.Service
             _dbContext = dbContext;
         }
 
-        public async Task<int> Create(Banner model)
+        public async Task<int> Create(BannerModel model)
         {
             var item = new Banner()
             {
-                Id = model.Id,
+                Id = Guid.NewGuid(),
                 Title = model.Title,
                 Content = model.Content,
                 Image = model.Image,
@@ -56,13 +58,22 @@ namespace PetStore.Service
             return list;
         }
 
-        public async Task<Banner> GetById(Guid id)
+        public async Task<BannerModel> GetById(Guid id)
         {
-            var item = _dbContext.Banners.FirstOrDefault(p => p.Id == id);
-            return item;
+            var entity = await _dbContext.Banners.FirstOrDefaultAsync(c => c.Id == id);
+
+            var entityModel = new BannerModel()
+            {
+                Id = entity.Id,
+                Content=entity.Content,
+                Title=entity.Title,
+                Image=entity.Image,
+                TypeBanner = entity.TypeBanner,
+            };
+            return entityModel;
         }
 
-        public async Task<int> Update(Banner model)
+        public async Task<int> Update(BannerModel model)
         {
             var item = await _dbContext.Banners.FindAsync(model.Id);
             item.Title = model.Title;

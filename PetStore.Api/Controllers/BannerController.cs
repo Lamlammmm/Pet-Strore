@@ -1,7 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Pet_Store.Data.Entities;
+using PetStore.Common.Extensions;
 using PetStore.Model;
+using PetStore.Model.Banner;
 using PetStore.Model.Blog;
+using PetStore.Model.Enums;
+using PetStore.Model.MenuItem;
 using PetStore.Service;
 using System.ComponentModel.DataAnnotations;
 using WebAdmin_API.Common;
@@ -46,6 +51,7 @@ namespace PetStore.Api.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var item = await _bannerService.GetById(id);
+            UpdataData(item);
             if (item == null)
             {
                 return BadRequest(new XBaseResult
@@ -64,7 +70,7 @@ namespace PetStore.Api.Controllers
                     data = item,
                     message = "Lấy dữ liệu thành công"
                 });
-            }
+            }       
         }
 
         [HttpGet("Get-All-Paging")]
@@ -74,8 +80,53 @@ namespace PetStore.Api.Controllers
             return Ok(item);
         }
 
+        [Route("create")]
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var model = new BannerModel
+            {
+                AvailableTypeBanner = new List<SelectListItem>
+                {
+                    new SelectListItem
+                    {
+                        Value = ((int)TypeBannerCode.system).ToString(),
+                        Text = TypeBannerCode.system.GetEnumDescription()
+                    },
+                    new SelectListItem
+                    {
+                        Value = ((int)TypeBannerCode.category).ToString(),
+                        Text = TypeBannerCode.category.GetEnumDescription()
+                    }
+                }
+            };
+
+            return Ok(new XBaseResult
+            {
+                data = model
+            });
+        }
+
+        private async void UpdataData(BannerModel model)
+        {
+            model.AvailableTypeBanner = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Value = ((int)TypeBannerCode.system).ToString(),
+                    Text = TypeBannerCode.system.GetEnumDescription()
+                },
+                new SelectListItem
+                {
+                    Value = ((int)TypeBannerCode.category).ToString(),
+                    Text = TypeBannerCode.category.GetEnumDescription()
+                }
+            };
+        }
+
         [HttpPost("Create-Banner")]
-        public async Task<IActionResult> Create([FromForm] Banner model)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Create([FromForm] BannerModel model)
         {
             var item = await _bannerService.Create(model);
             if (item > 0)
@@ -101,7 +152,8 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Update-Banner")]
-        public async Task<IActionResult> Update([FromForm] Banner model)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update([FromForm] BannerModel model)
         {
             var item = await _bannerService.Update(model);
             if (item > 0)

@@ -1,6 +1,7 @@
 ﻿using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
 using PetStore.Model;
+using PetStore.Model.Banner;
 
 namespace PetStore.Service
 {
@@ -8,11 +9,11 @@ namespace PetStore.Service
     {
         Task<IList<Banner>> GetAll();
 
-        Task<Banner> GetById(Guid id);
+        Task<BannerModel> GetById(Guid id);
 
-        Task<int> Create(Banner model);
+        Task<int> Create(BannerModel model);
 
-        Task<int> Update(Banner model);
+        Task<int> Update(BannerModel model);
 
         Task<int> DeleteByIds(IEnumerable<Guid> id);
         Task<int> Delete(Guid id);
