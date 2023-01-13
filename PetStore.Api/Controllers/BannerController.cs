@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
+using PetStore.Model;
 using PetStore.Model.Blog;
 using PetStore.Service;
 using System.ComponentModel.DataAnnotations;
@@ -64,6 +65,13 @@ namespace PetStore.Api.Controllers
                     message = "Lấy dữ liệu thành công"
                 });
             }
+        }
+
+        [HttpGet("Get-All-Paging")]
+        public async Task<IActionResult> GetAllPaging(BannerSeachContext cxt)
+        {
+            var item = await _bannerService.GetAllPaging(cxt);
+            return Ok(item);
         }
 
         [HttpPost("Create-Banner")]

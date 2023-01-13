@@ -1,4 +1,6 @@
 ﻿using Pet_Store.Data.Entities;
+using PetStore.Common.Common;
+using PetStore.Model;
 
 namespace PetStore.Service
 {
@@ -14,5 +16,6 @@ namespace PetStore.Service
 
         Task<int> DeleteByIds(IEnumerable<Guid> id);
         Task<int> Delete(Guid id);
+        Task<ApiResult<Pagingnation<Banner>>> GetAllPaging(BannerSeachContext ctx);
     }
 }

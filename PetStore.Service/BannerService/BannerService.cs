@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pet_Store.Common.Common;
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
+using PetStore.Common.Common;
+using PetStore.Model;
 
 namespace PetStore.Service
 {
@@ -69,6 +72,36 @@ namespace PetStore.Service
             _dbContext.Banners.Update(item);
             var result = await _dbContext.SaveChangesAsync();
             return result;
+        }
+
+        public async Task<ApiResult<Pagingnation<Banner>>> GetAllPaging(BannerSeachContext ctx)
+        {
+            var query = from a in _dbContext.Banners
+                        select new { a };
+            if (!string.IsNullOrEmpty(ctx.Keyword))
+            {
+                query = query.Where(x => x.a.Title.Contains(ctx.Keyword));
+            }
+            var totalRecords = await query.CountAsync();
+            var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
+                .Take(ctx.PageSize)
+                .Select(u => new Banner()
+                {
+                    Title = u.a.Title,
+                    Content = u.a.Content,
+                    Image= u.a.Image,
+                    TypeBanner = u.a.TypeBanner,
+                })
+                .ToListAsync();
+            var pagination = new Pagingnation<Banner>
+            {
+                Items = items,
+                TotalRecords = totalRecords,
+                PageIndex = ctx.PageIndex,
+                PageSize = ctx.PageSize,
+            };
+
+            return new ApiSuccessResult<Pagingnation<Banner>>(pagination);
         }
     }
 }
