@@ -68,7 +68,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpGet("Get-All-Paging")]
-        public async Task<IActionResult> GetAllPaging(BannerSeachContext cxt)
+        public async Task<IActionResult> GetAllPaging([FromQuery] BannerSeachContext cxt)
         {
             var item = await _bannerService.GetAllPaging(cxt);
             return Ok(item);
