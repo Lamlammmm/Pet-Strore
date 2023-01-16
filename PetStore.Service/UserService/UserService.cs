@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using PetStore.Model;
@@ -16,11 +17,12 @@ namespace PetStore.Service
 
         public async Task<int> Create(UserModel model)
         {
+            var hashedPassword = new PasswordHasher<UserModel>().HashPassword(new UserModel(), model.PasswordHash);
             var item = new User()
             {
-                AccessFailedCount = model.AccessFailedCount,
+                AccessFailedCount = (int)model.AccessFailedCount,
                 UserName = model.UserName,
-                Id = model.GuidId,
+                Id = model.Id.ToString(),
                 Active = model.Active,
                 ChucVuId = model.ChucVuId,
                 Code = model.Code,
@@ -36,16 +38,23 @@ namespace PetStore.Service
                 LockoutEnd = model.LockoutEnd,
                 NormalizedEmail = model.NormalizedEmail,
                 NormalizedUserName = model.NormalizedUserName,
-                PasswordHash = model.PasswordHash,
+                PasswordHash = hashedPassword,
                 PhoneNumber = model.PhoneNumber,
                 PhoneNumberConfirmed = model.PhoneNumberConfirmed,
-                SecurityStamp = model.SecurityStamp,
+                SecurityStamp = GenerateSecurityStamp(),
                 TwoFactorEnabled = model.TwoFactorEnabled,
+                Avatar = model.Avatar,
             };
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.Users.AddAsync(item);
             var result = await _dbContext.SaveChangesAsync();
             return result;
         }
+
+        private Func<string> GenerateSecurityStamp = delegate ()
+        {
+            var guid = Guid.NewGuid();
+            return String.Concat(Array.ConvertAll(guid.ToByteArray(), b => b.ToString("X2")));
+        };
 
         public async Task<int> Delete(string id)
         {
@@ -80,8 +89,9 @@ namespace PetStore.Service
 
         public async Task<int> Update(UserModel model)
         {
-            var item = await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == model.GuidId);
-            item.AccessFailedCount = model.AccessFailedCount;
+            var hashedPassword = new PasswordHasher<UserModel>().HashPassword(new UserModel(), model.PasswordHash);
+            var item = await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == model.Id.ToString());
+            item.AccessFailedCount = (int)model.AccessFailedCount;
             item.UserName = model.UserName;
             item.Active = model.Active;
             item.ChucVuId = model.ChucVuId;
@@ -98,11 +108,12 @@ namespace PetStore.Service
             item.LockoutEnd = model.LockoutEnd;
             item.NormalizedEmail = model.NormalizedEmail;
             item.NormalizedUserName = model.NormalizedUserName;
-            item.PasswordHash = model.PasswordHash;
+            item.PasswordHash = hashedPassword;
             item.PhoneNumber = model.PhoneNumber;
             item.PhoneNumberConfirmed = model.PhoneNumberConfirmed;
-            item.SecurityStamp = model.SecurityStamp;
+            item.SecurityStamp = GenerateSecurityStamp();
             item.TwoFactorEnabled = model.TwoFactorEnabled;
+            item.Avatar = model.Avatar;
             _dbContext.Users.Update(item);
             var result = await _dbContext.SaveChangesAsync();
             return result;
