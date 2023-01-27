@@ -112,6 +112,7 @@ builder.Services.AddScoped<IFileBannerService, FileBannerService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserContactService, UserContactService>();
 builder.Services.AddScoped<IVoucherCodeService, VoucherCodeService>();
+builder.Services.AddScoped<IFileProductService, FileProductService>();
 
 var app = builder.Build();
 
