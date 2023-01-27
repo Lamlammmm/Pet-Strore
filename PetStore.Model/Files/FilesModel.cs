@@ -16,5 +16,6 @@ namespace PetStore.Model.Files
 
         public Guid? AboutId { get; set; }
         public Guid? BannerId { get; set; }
+        public Guid? ProductId { get; set; }
     }
 }

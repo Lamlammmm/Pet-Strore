@@ -21,7 +21,7 @@ namespace PetStore.Service.VoucherCodeService
         {
             var item = new VoucherCode()
             {
-                Id = Guid.NewGuid(),
+                Id = model.Id,
                 Code = model.Code,
                 Dieukien = model.Dieukien,
             };

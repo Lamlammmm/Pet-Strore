@@ -340,6 +340,9 @@ namespace Pet_Store.Data.Migrations
                     b.Property<Guid?>("BannerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Extension")
                         .HasColumnType("nvarchar(50)");
 
