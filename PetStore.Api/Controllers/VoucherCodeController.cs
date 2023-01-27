@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
+using PetStore.Model;
 using PetStore.Service;
 using WebAdmin_API.Common;
 
@@ -62,6 +64,13 @@ namespace PetStore.Api.Controllers
                     message = "Lấy dữ liệu không thành công"
                 });
             }
+        }
+
+        [HttpGet("Get-All-Paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] VoucherCodeSeachContext ctx)
+        {
+            var item = await _voucherCodeService.GetAllPaging(ctx);
+            return Ok(item);
         }
 
         [HttpPost("Create-VoucherCode")]
