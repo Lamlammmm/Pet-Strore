@@ -20,7 +20,7 @@ namespace PetStore.Service
         {
             var item = new ServicePet()
             {
-                Id = Guid.NewGuid(),
+                Id = model.Id,
                 Content = model.Content,
                 Icon = model.Icon,
                 Title = model.Title,
