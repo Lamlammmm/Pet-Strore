@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pet_Store.Data.Entities;
 using PetStore.Model;
 using PetStore.Service;
@@ -17,6 +18,32 @@ namespace PetStore.Api.Controllers
 
         [HttpGet("Get-List-Service")]
         public async Task<IActionResult> GetAll()
+        {
+            var list = await _servicePetService.GetAll();
+            if (list != null)
+            {
+                return Ok(new XBaseResult
+                {
+                    success = true,
+                    httpStatusCode = 200,
+                    data = list,
+                    message = "Lấy dữ liệu thành công"
+                });
+            }
+            else
+            {
+                return BadRequest(new XBaseResult
+                {
+                    success = false,
+                    httpStatusCode = 400,
+                    message = "Lấy dữ liệu không thành công"
+                });
+            }
+        }
+
+        [HttpGet("Get-List-Service-home")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllHome()
         {
             var list = await _servicePetService.GetAll();
             if (list != null)

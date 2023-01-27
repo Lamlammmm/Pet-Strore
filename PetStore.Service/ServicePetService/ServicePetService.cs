@@ -71,6 +71,7 @@ namespace PetStore.Service
                     Title = u.a.Title,
                     Content = u.a.Content,
                     Icon = u.a.Icon,
+                    Id = u.a.Id,
                 })
                 .ToListAsync();
             var pagination = new Pagingnation<ServicePet>
