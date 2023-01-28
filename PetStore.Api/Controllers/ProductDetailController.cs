@@ -65,6 +65,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Create-ProductDetail")]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductDetailModel model)
         {
             var item = await _productDetailService.Create(model);
@@ -90,6 +91,7 @@ namespace PetStore.Api.Controllers
         }
 
         [HttpPost("Update-ProductDetail")]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Update([FromForm] ProductDetailModel model)
         {
             var item = await _productDetailService.Update(model);

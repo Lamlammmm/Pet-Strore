@@ -62,7 +62,7 @@ namespace PetStore.Api.Controllers
 
         [Route("create-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, Guid id, int width = 1920, int height = 1080)
+        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, Guid id, int width = 222, int height = 222)
         {
             if (filesadd == null || filesadd.Count == 0)
 
@@ -126,7 +126,7 @@ namespace PetStore.Api.Controllers
 
         [Route("update-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, Guid id, int width = 1920, int height = 1080)
+        public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, Guid id, int width = 222, int height = 222)
         {
             if (filesadd == null || filesadd.Count == 0)
 
