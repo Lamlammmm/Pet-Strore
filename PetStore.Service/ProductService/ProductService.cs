@@ -60,7 +60,9 @@ namespace PetStore.Service
             var query = from a in _dbContext.Products
                         join c in _dbContext.ProductDetails on a.Id equals c.ProductId into pt
                         from tp in pt.DefaultIfEmpty()
-                        select new { a, tp };
+                        join v in _dbContext.VoucherCodes on tp.VoteID equals v.Id into vt
+                        from tv in vt.DefaultIfEmpty()
+                        select new { a, tp, tv };
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
                 query = query.Where(x => x.a.Name.Contains(ctx.Keyword));
@@ -78,6 +80,7 @@ namespace PetStore.Service
                     ImageDetail = u.tp.Image,
                     Content = u.tp.Content,
                     VoteId = u.tp.VoteID,
+                    VoteName = $"{u.tv.Code} - {u.tv.Dieukien}",
                     Qualyti = u.tp.Quality
                 })
                 .ToListAsync();

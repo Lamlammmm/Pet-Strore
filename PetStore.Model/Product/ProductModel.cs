@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PetStore.Model.BaseEntity;
 using PetStore.Model.Files;
 
@@ -12,6 +13,8 @@ namespace PetStore.Model
         public string? ImageDetail { get; set; }
         public string? Content { get; set; }
         public Guid? VoteId { get; set; }
+        public string? VoteName { get; set; }
+        public IList<SelectListItem>? AvailableVote { get; set; }
         public int? PriceDetail { get; set; }
         public int? Qualyti { get; set; }
         public Guid ProductId { get; set; }
