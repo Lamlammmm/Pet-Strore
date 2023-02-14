@@ -7,7 +7,8 @@ namespace PetStore.Service
 {
     public interface IBannerService
     {
-        Task<IList<BannerModel>> GetAll();
+        Task<IList<BannerModel>> GetAllBannerHome();
+        Task<IList<BannerModel>> GetAllBannerOffer();
 
         Task<BannerModel> GetById(Guid id);
 

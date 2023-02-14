@@ -24,7 +24,33 @@ namespace PetStore.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
-            var item = await _bannerService.GetAll();
+            var item = await _bannerService.GetAllBannerHome();
+            if (item == null)
+            {
+                return BadRequest(new XBaseResult
+                {
+                    success = false,
+                    httpStatusCode = 400,
+                    message = "Lấy dữ liệu không thành công"
+                });
+            }
+            else
+            {
+                return Ok(new XBaseResult
+                {
+                    success = true,
+                    httpStatusCode = 200,
+                    data = item,
+                    message = "Lấy dữ liệu thành công"
+                });
+            }
+        }
+
+        [HttpGet("Get-Offer")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetOffer()
+        {
+            var item = await _bannerService.GetAllBannerOffer();
             if (item == null)
             {
                 return BadRequest(new XBaseResult

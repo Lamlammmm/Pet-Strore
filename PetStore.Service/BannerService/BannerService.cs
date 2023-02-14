@@ -4,9 +4,7 @@ using Pet_Store.Data.EF;
 using Pet_Store.Data.Entities;
 using PetStore.Common.Common;
 using PetStore.Model;
-using PetStore.Model.About;
 using PetStore.Model.Banner;
-using PetStore.Model.MenuItem;
 
 namespace PetStore.Service
 {
@@ -40,7 +38,7 @@ namespace PetStore.Service
             {
                 var finditem = await _dbContext.Banners.FindAsync(item);
                 _dbContext.Banners.Remove(finditem);
-            }           
+            }
             var result = await _dbContext.SaveChangesAsync();
             return result;
         }
@@ -53,7 +51,7 @@ namespace PetStore.Service
             return result;
         }
 
-        public async Task<IList<BannerModel>> GetAll()
+        public async Task<IList<BannerModel>> GetAllBannerHome()
         {
             var query = from c in _dbContext.Banners
                         where c.TypeBanner == 10
@@ -64,7 +62,7 @@ namespace PetStore.Service
                 Content = x.c.Content,
                 Image = x.c.Image,
                 Title = x.c.Title,
-                TypeBanner= x.c.TypeBanner
+                TypeBanner = x.c.TypeBanner
             }).ToListAsync();
 
             return entity;
@@ -77,9 +75,9 @@ namespace PetStore.Service
             var entityModel = new BannerModel()
             {
                 Id = entity.Id,
-                Content=entity.Content,
-                Title=entity.Title,
-                Image=entity.Image,
+                Content = entity.Content,
+                Title = entity.Title,
+                Image = entity.Image,
                 TypeBanner = entity.TypeBanner,
             };
             return entityModel;
@@ -110,10 +108,10 @@ namespace PetStore.Service
                 .Take(ctx.PageSize)
                 .Select(u => new Banner()
                 {
-                    Id=u.a.Id,
+                    Id = u.a.Id,
                     Title = u.a.Title,
                     Content = u.a.Content,
-                    Image= u.a.Image,
+                    Image = u.a.Image,
                     TypeBanner = u.a.TypeBanner,
                 })
                 .ToListAsync();
@@ -126,6 +124,23 @@ namespace PetStore.Service
             };
 
             return new ApiSuccessResult<Pagingnation<Banner>>(pagination);
+        }
+
+        public async Task<IList<BannerModel>> GetAllBannerOffer()
+        {
+            var query = from c in _dbContext.Banners
+                        where c.TypeBanner == 20
+                        select new { c };
+            var entity = await query.Select(x => new BannerModel()
+            {
+                Id = x.c.Id,
+                Content = x.c.Content,
+                Image = x.c.Image,
+                Title = x.c.Title,
+                TypeBanner = x.c.TypeBanner
+            }).ToListAsync();
+
+            return entity;
         }
     }
 }
